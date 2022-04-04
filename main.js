@@ -1,3 +1,4 @@
+import { APIKEY } from "./config.js";
 import "./sass/style.scss";
 
 const webCarbonUrl = "https://kea-alt-del.dk/websitecarbon/site/?url=";
@@ -39,7 +40,7 @@ function setUpQuery() {
   const api = "https://www.googleapis.com/pagespeedonline/v5/runPagespeed";
   const parameters = {
     url: website,
-    key: "AIzaSyCCsJR7PD4hGIi2x8r2y8B4rgpYooeICYQ",
+    key: APIKEY,
   };
   let query = `${api}?url=${parameters.url}&key=${parameters.key}`;
   return query;
