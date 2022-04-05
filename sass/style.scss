@@ -1,3 +1,86 @@
+$primary-color: #2b2d42;
+$secondary-color: #92dce5;
+$accent-color: #f7f9f5;
+
+// RESET
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: sans-serif;
+}
+
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+ol,
+ul {
+  list-style: none;
+}
+
+img {
+  max-width: 100%;
+}
+
+// STYLING
 body {
-  background-color: aqua;
+  background-color: $primary-color;
+  padding: 5rem;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+}
+
+h1 {
+  color: $secondary-color;
+  grid-column: 1/-1;
+  font-size: 3rem;
+}
+h2 {
+  color: $secondary-color;
+  font-weight: 100;
+  grid-column: 1/-1;
+}
+
+form * {
+  display: block;
+}
+form {
+  grid-column: 2/3;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  flex-direction: column;
+  padding: 2rem;
+
+  legend {
+    font-size: 1.5rem;
+    font-weight: 100;
+    color: $accent-color;
+  }
+
+  label {
+    font-weight: 100;
+    font-size: 1rem;
+    padding-top: 1rem;
+    color: $secondary-color;
+  }
+
+  input,
+  select {
+    height: 40px;
+    font-size: 1.1rem;
+  }
+
+  button {
+    all: unset;
+    background-color: $secondary-color;
+    color: $primary-color;
+    font-size: 1rem;
+    font-weight: 600;
+    padding: 12px 24px;
+    border-radius: 5px;
+    margin-top: 2rem;
+  }
 }
