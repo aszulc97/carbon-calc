@@ -50,7 +50,11 @@ form {
   align-items: flex-start;
   justify-content: center;
   flex-direction: column;
-  // padding: 2em;
+  padding: 2em;
+  border-radius: 5px;
+  background-color: #24252e;
+  box-shadow: 0 0.125rem 1rem rgb(27 40 50 / 4%), 0 0.125rem 2rem rgb(27 40 50 / 8%),
+    0 0 0 0.0625rem rgb(27 40 50 / 2%);
 
   legend {
     font-size: 1.5em;
@@ -83,17 +87,23 @@ form {
   }
 }
 
-article{
+article {
   width: 90%;
-  h3{
-    background-color: $secondary-color;
-    color: $primary-color;
-    padding: 0.5rem;
+
+  h3 {
+    // background-color: $secondary-color;
+    // color: $primary-color;
+    color: $accent-color;
+
+    // padding: 0.5rem;
+    border-radius: 5px;
+    width: 20ch;
   }
-  p{
+  p {
     margin-top: 1rem;
     color: $secondary-color;
     line-height: 1.5em;
+    width: 25ch;
   }
 }
 
@@ -103,7 +113,7 @@ article{
     // background-color: hotpink;
     font-size: 24px;
   }
-  article{
+  article {
     width: 70%;
   }
 }
@@ -113,7 +123,7 @@ article{
     // background-color: aqua;
     font-size: 18px;
   }
-  article{
+  article {
     width: 80%;
   }
 }
