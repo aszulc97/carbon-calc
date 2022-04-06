@@ -10,43 +10,45 @@
   <body>
     <h1>How is your website impacting the planet?</h1>
     <h2>Lets talk CO2</h2>
-    <form action="">
-      <legend>Website information</legend>
-      <div>
-        <label for="url">Enter your url</label>
-        <input type="text" name="url" id="url" required />
-      </div>
-      <div>
-        <!-- <label for="industry">Choose your industry</label>
-        <input list="industry" />
-        <datalist id="industry">
-          <option value=" Agriculture / Food Production"></option>
-          <option value="Financial sector"></option>
-          <option value="Clothing and fashion"></option>
-          <option value="Tech and computer"></option>
-          <option value="Construction"></option>
-          <option value="Transport"></option>
-          <option value="Culture, sports and the entertainment"></option>
-          <option value="Hotel and restaurant"></option>
-          <option value="Energy"></option>
-          <option value="Grocery store"></option>
-        </datalist> -->
-        <label for="industry">Choose your industry</label>
-        <select name="industry" id="industry">
-          <option>Agriculture / Food Production</option>
-          <option>Financial sector</option>
-          <option>Clothing and fashion</option>
-          <option>Tech and computer</option>
-          <option>Construction</option>
-          <option>Transport</option>
-          <option>Culture, sports and the entertainment</option>
-          <option>Hotel and restaurant</option>
-          <option>Energy</option>
-          <option>Grocery store</option>
-        </select>
-      </div>
-      <button type="submit">Calculate</button>
-    </form>
+    <div class="form-container">
+      <form action="">
+        <legend>Website information</legend>
+        <div>
+          <label for="url">Enter your url</label>
+          <input type="text" name="url" id="url" required />
+        </div>
+        <div>
+          <!-- <label for="industry">Choose your industry</label>
+          <input list="industry" />
+          <datalist id="industry">
+            <option value=" Agriculture / Food Production"></option>
+            <option value="Financial sector"></option>
+            <option value="Clothing and fashion"></option>
+            <option value="Tech and computer"></option>
+            <option value="Construction"></option>
+            <option value="Transport"></option>
+            <option value="Culture, sports and the entertainment"></option>
+            <option value="Hotel and restaurant"></option>
+            <option value="Energy"></option>
+            <option value="Grocery store"></option>
+          </datalist> -->
+          <label for="industry">Choose your industry</label>
+          <select name="industry" id="industry">
+            <option>Agriculture / Food Production</option>
+            <option>Financial sector</option>
+            <option>Clothing and fashion</option>
+            <option>Tech and computer</option>
+            <option>Construction</option>
+            <option>Transport</option>
+            <option>Culture, sports and the entertainment</option>
+            <option>Hotel and restaurant</option>
+            <option>Energy</option>
+            <option>Grocery store</option>
+          </select>
+        </div>
+        <button type="submit">Calculate</button>
+      </form>
+    </div>
 
     <script type="module" src="/main.js"></script>
   </body>

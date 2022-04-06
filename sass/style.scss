@@ -15,34 +15,31 @@ $accent-color: #f7f9f5;
   box-sizing: border-box;
 }
 
-ol,
-ul {
-  list-style: none;
-}
-
-img {
-  max-width: 100%;
-}
-
 // STYLING
+
 body {
+  font-size: 20px;
   background-color: $primary-color;
-  padding: 5rem;
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
+  padding: 2rem;
 }
 
 h1 {
   color: $secondary-color;
   grid-column: 1/-1;
-  font-size: 3rem;
+  font-size: 3em;
 }
 h2 {
+  font-size: 1.5em;
   color: $secondary-color;
   font-weight: 100;
   grid-column: 1/-1;
+  padding-top: 1rem;
 }
 
+.form-container {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+}
 form * {
   display: block;
 }
@@ -52,17 +49,17 @@ form {
   align-items: flex-start;
   justify-content: center;
   flex-direction: column;
-  padding: 2rem;
+  padding: 2em;
 
   legend {
-    font-size: 1.5rem;
+    font-size: 1.5em;
     font-weight: 100;
     color: $accent-color;
   }
 
   label {
     font-weight: 100;
-    font-size: 1rem;
+    font-size: 1em;
     padding-top: 1rem;
     color: $secondary-color;
   }
@@ -70,17 +67,46 @@ form {
   input,
   select {
     height: 40px;
-    font-size: 1.1rem;
+    font-size: 1.1em;
   }
 
   button {
     all: unset;
     background-color: $secondary-color;
     color: $primary-color;
-    font-size: 1rem;
+    font-size: 1em;
     font-weight: 600;
     padding: 12px 24px;
     border-radius: 5px;
     margin-top: 2rem;
+  }
+}
+
+// MQ
+@media screen and (min-width: 1600px) {
+  body {
+    // background-color: hotpink;
+    font-size: 24px;
+  }
+}
+
+@media screen and (max-width: 1350px) {
+  body {
+    // background-color: aqua;
+    font-size: 18px;
+  }
+}
+@media screen and (max-width: 1000px) {
+  body {
+    // background-color: plum;
+    font-size: 14px;
+  }
+}
+
+@media screen and (max-width: 600px) {
+  body {
+    // background-color: blue;
+    font-size: 10px;
+    padding: 1rem;
   }
 }
