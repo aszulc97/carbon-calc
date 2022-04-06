@@ -33,12 +33,13 @@ h2 {
   color: $secondary-color;
   font-weight: 100;
   grid-column: 1/-1;
-  padding-top: 1rem;
+  padding: 2rem 0;
 }
 
 .form-container {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
+  gap: 2rem;
 }
 form * {
   display: block;
@@ -49,7 +50,7 @@ form {
   align-items: flex-start;
   justify-content: center;
   flex-direction: column;
-  padding: 2em;
+  // padding: 2em;
 
   legend {
     font-size: 1.5em;
@@ -82,11 +83,28 @@ form {
   }
 }
 
+article{
+  width: 90%;
+  h3{
+    background-color: $secondary-color;
+    color: $primary-color;
+    padding: 0.5rem;
+  }
+  p{
+    margin-top: 1rem;
+    color: $secondary-color;
+    line-height: 1.5em;
+  }
+}
+
 // MQ
 @media screen and (min-width: 1600px) {
   body {
     // background-color: hotpink;
     font-size: 24px;
+  }
+  article{
+    width: 70%;
   }
 }
 
@@ -94,6 +112,9 @@ form {
   body {
     // background-color: aqua;
     font-size: 18px;
+  }
+  article{
+    width: 80%;
   }
 }
 @media screen and (max-width: 1000px) {
