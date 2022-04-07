@@ -7,24 +7,53 @@ const webCarbonURL = "https://kea-alt-del.dk/websitecarbon/site/?url=";
 const dbURL = "https://serialkillers-7bdb.restdb.io/rest/carboncalc";
 
 fetchData();
+let websiteData;
 
 function fetchData() {
   fetch(webCarbonURL + website)
     .then((res) => res.json())
-    .then((data) => showWebcarbonData(data));
+    .then((data) => {
+      websiteData = data;
+      showWebcarbonData(websiteData);
+    });
 }
 
+function checkDb() {
+  fetch(dbURL, {
+    headers: {
+      "x-apikey": db_APIKEY,
+    },
+  })
+    .then((res) => res.json())
+    .then((data) => displayData(data));
+}
+
+function displayData(data) {
+  let url = normalizeURL(website);
+  if (data.some((e) => e.URL === url)) {
+    console.log("data already in db");
+  } else {
+    post(websiteData, url);
+  }
+}
+
+//sprawdz czy njest
+//jesli nie to wstaw
+//jesli jest to sprawdz czy identyko
+//jesli nie to put
+
 function showWebcarbonData(data) {
-  post(data);
+  checkDb();
   console.log(data);
   document.querySelector(".website").textContent = "Your website: " + website;
   document.querySelector(".bytes").textContent = data.statistics.co2.grid.grams;
   // run();
 }
 
-function post(data) {
+function post(data, url) {
+  console.log("data", data);
   const newURL = {
-    URL: normalizeURL(website),
+    URL: url,
     totalbytes: data.bytes,
     co2: data.statistics.co2.grid.grams,
     greenhost: data.green,
@@ -61,7 +90,6 @@ function normalizeURL(url) {
   } else {
     normalizedURL = "http://" + url;
   }
-  console.log(normalizedURL.lastIndexOf("/"));
   if (normalizedURL.lastIndexOf("/") + 1 === normalizedURL.length) {
     normalizedURL = normalizedURL.slice(0, -1);
   }
