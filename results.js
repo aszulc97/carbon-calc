@@ -37,11 +37,6 @@ function displayData(data) {
   }
 }
 
-//sprawdz czy njest
-//jesli nie to wstaw
-//jesli jest to sprawdz czy identyko
-//jesli nie to put
-
 function showWebcarbonData(data) {
   checkDb();
   console.log(data);
