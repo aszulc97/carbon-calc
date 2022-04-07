@@ -10,52 +10,82 @@ h1 {
   color: base.$secondary-color;
   grid-column: 1/-1;
   font-size: 3em;
+  font-weight: 600;
 }
 h2 {
-  font-size: 1.5em;
+  font-size: 2em;
   color: base.$secondary-color;
-  font-weight: 100;
+  font-weight: 300;
   grid-column: 1/-1;
   padding: 2rem 0;
 }
-
-.form-container {
+.container {
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
-  gap: 2rem;
+  grid-template-columns: 2fr 1fr;
+  //   gap: 5em;
+  align-items: center;
+  justify-items: center;
 }
 form * {
   display: block;
 }
 form {
-  grid-column: 2/3;
-  display: flex;
-  align-items: flex-start;
-  justify-content: center;
-  flex-direction: column;
   padding: 2em;
   border-radius: 5px;
-  //   background-color: #24252e;
+  background-color: base.$secondary-color;
+  background-color: rgb(146 220 229 / 95%);
   box-shadow: 0 0.125rem 1rem rgb(27 40 50 / 4%), 0 0.125rem 2rem rgb(27 40 50 / 8%),
     0 0 0 0.0625rem rgb(27 40 50 / 2%);
 
-  legend {
-    font-size: 1.5em;
-    font-weight: 100;
-    color: base.$accent-color;
+  display: grid;
+  grid-template-columns: auto 1fr;
+  align-items: center;
+
+  gap: 1rem;
+  max-width: 900px;
+  h3 {
+    grid-column: 1/-1;
+    font-size: 1.7em;
+    font-weight: 600;
+    color: base.$primary-color;
+    margin-bottom: 1rem;
+  }
+  div {
+    display: contents;
   }
 
   label {
-    font-weight: 100;
+    font-weight: 400;
     font-size: 1em;
-    padding-top: 1rem;
-    color: base.$secondary-color;
+    color: base.$primary-color;
   }
 
   input,
+  input:focus,
   select {
-    height: 40px;
-    font-size: 1.1em;
+    all: unset;
+    font-size: 1em;
+    border-bottom: 2px solid base.$primary-color;
+    padding: 0.5rem;
+    background-color: lighten(base.$secondary-color, 5%);
+    border-radius: 2px;
+  }
+
+  option {
+    font-size: 1.2rem;
+  }
+
+  div:focus-within input {
+    background-color: lighten(base.$primary-color, 10%);
+    color: base.$accent-color;
+    border-radius: 2px;
+  }
+
+  select:focus {
+    background-color: base.$primary-color;
+    color: base.$accent-color;
+    border-radius: 2px;
+    padding: 0.5rem;
   }
 }
 
@@ -63,19 +93,14 @@ article {
   width: 90%;
 
   h3 {
-    // background-color: base.$secondary-color;
-    // color: base.$primary-color;
     color: base.$accent-color;
-
-    padding: 0.5rem;
     border-radius: 5px;
-    width: 20ch;
   }
   p {
     margin-top: 1rem;
     color: base.$secondary-color;
     line-height: 1.5em;
-    width: 25ch;
+    // width: 25ch;
   }
 }
 
@@ -99,8 +124,12 @@ article {
     // background-color: aqua;
     font-size: 18px;
   }
+  form {
+    max-width: 600px;
+  }
+
   article {
-    width: 80%;
+    width: 70%;
   }
 }
 @media screen and (max-width: 1000px) {
@@ -110,10 +139,44 @@ article {
   }
 }
 
+@media screen and (max-width: 760px) {
+  .container {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+}
 @media screen and (max-width: 600px) {
   body {
     // background-color: blue;
-    font-size: 10px;
+    font-size: 14px;
     padding: 1rem;
+  }
+
+  form {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 2rem;
+
+    h3 {
+      margin-bottom: 0;
+    }
+    div {
+      display: flex;
+      flex-direction: column;
+      gap: 0.3rem;
+      width: 95%;
+    }
+    input {
+      width: 100%;
+    }
+    option {
+      font-size: 10px;
+      padding: 0;
+    }
+  }
+  article {
+    padding: 2rem;
+    width: 100%;
   }
 }
