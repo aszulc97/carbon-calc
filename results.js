@@ -24,7 +24,7 @@ function showWebcarbonData(data) {
 
 function post(data) {
   const newURL = {
-    URL: website,
+    URL: normalizeURL(website),
     totalbytes: data.bytes,
     co2: data.statistics.co2.grid.grams,
     greenhost: data.green,
@@ -44,6 +44,28 @@ function post(data) {
   }).then((res) => res.json());
   //.then((data) => displayCar(data));
   console.log("posted");
+}
+
+function normalizeURL(url) {
+  let normalizedURL;
+  url = url.split("://");
+  console.log(url);
+  if (url.length > 1) {
+    if (url[1].substring(0, url[1].indexOf(".")) === "www") {
+      normalizedURL = "http://" + url[1].substring(url[1].indexOf(".") + 1);
+    } else {
+      normalizedURL = "http://" + url[1];
+    }
+  } else if (url[0].substring(0, url[0].indexOf(".")) === "www") {
+    normalizedURL = "http://" + url[0].substring(url[0].indexOf(".") + 1);
+  } else {
+    normalizedURL = "http://" + url;
+  }
+  console.log(normalizedURL.lastIndexOf("/"));
+  if (normalizedURL.lastIndexOf("/") + 1 === normalizedURL.length) {
+    normalizedURL = normalizedURL.slice(0, -1);
+  }
+  return normalizedURL;
 }
 
 // function showGoogleData(data) {
