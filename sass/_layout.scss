@@ -60,6 +60,12 @@ form {
     color: base.$primary-color;
   }
 
+  // input::before {
+  //   content: "♥";
+  //   width: 20px;
+  //   height: 20px;
+  //   color: white;
+  // }
   input,
   input:focus,
   // input:-webkit-autofill,
@@ -72,6 +78,13 @@ form {
     padding: 0.5rem;
     background-color: lighten(base.$secondary-color, 5%);
     border-radius: 2px;
+  }
+
+  input:valid:not(:focus, :placeholder-shown) {
+    border: 1.5px solid green;
+  }
+  input:invalid:not(:focus, :placeholder-shown) {
+    border: 1.5px solid red;
   }
 
   option {
