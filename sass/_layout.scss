@@ -62,6 +62,9 @@ form {
 
   input,
   input:focus,
+  // input:-webkit-autofill,
+  // https://developer.mozilla.org/en-US/docs/Web/CSS/:autofill
+  // ASK DANNIE
   select {
     all: unset;
     font-size: 1em;
