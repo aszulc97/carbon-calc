@@ -1,0 +1,119 @@
+@use "base";
+
+body {
+  font-size: 20px;
+  background-color: base.$primary-color;
+  padding: 2rem;
+}
+
+h1 {
+  color: base.$secondary-color;
+  grid-column: 1/-1;
+  font-size: 3em;
+}
+h2 {
+  font-size: 1.5em;
+  color: base.$secondary-color;
+  font-weight: 100;
+  grid-column: 1/-1;
+  padding: 2rem 0;
+}
+
+.form-container {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 2rem;
+}
+form * {
+  display: block;
+}
+form {
+  grid-column: 2/3;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  flex-direction: column;
+  padding: 2em;
+  border-radius: 5px;
+  //   background-color: #24252e;
+  box-shadow: 0 0.125rem 1rem rgb(27 40 50 / 4%), 0 0.125rem 2rem rgb(27 40 50 / 8%),
+    0 0 0 0.0625rem rgb(27 40 50 / 2%);
+
+  legend {
+    font-size: 1.5em;
+    font-weight: 100;
+    color: base.$accent-color;
+  }
+
+  label {
+    font-weight: 100;
+    font-size: 1em;
+    padding-top: 1rem;
+    color: base.$secondary-color;
+  }
+
+  input,
+  select {
+    height: 40px;
+    font-size: 1.1em;
+  }
+}
+
+article {
+  width: 90%;
+
+  h3 {
+    // background-color: base.$secondary-color;
+    // color: base.$primary-color;
+    color: base.$accent-color;
+
+    padding: 0.5rem;
+    border-radius: 5px;
+    width: 20ch;
+  }
+  p {
+    margin-top: 1rem;
+    color: base.$secondary-color;
+    line-height: 1.5em;
+    width: 25ch;
+  }
+}
+
+// MEDIA QUERIES
+
+// MIN
+@media screen and (min-width: 1600px) {
+  body {
+    // background-color: hotpink;
+    font-size: 24px;
+  }
+  article {
+    width: 70%;
+  }
+}
+
+// MAX
+
+@media screen and (max-width: 1350px) {
+  body {
+    // background-color: aqua;
+    font-size: 18px;
+  }
+  article {
+    width: 80%;
+  }
+}
+@media screen and (max-width: 1000px) {
+  body {
+    // background-color: plum;
+    font-size: 14px;
+  }
+}
+
+@media screen and (max-width: 600px) {
+  body {
+    // background-color: blue;
+    font-size: 10px;
+    padding: 1rem;
+  }
+}

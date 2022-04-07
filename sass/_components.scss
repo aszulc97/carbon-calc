@@ -1,0 +1,12 @@
+@use "base";
+
+button {
+  all: unset;
+  background-color: base.$secondary-color;
+  color: base.$primary-color;
+  font-size: 1em;
+  font-weight: 600;
+  padding: 12px 24px;
+  border-radius: 5px;
+  margin-top: 2rem;
+}
