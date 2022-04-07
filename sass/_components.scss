@@ -2,8 +2,8 @@
 
 button {
   all: unset;
-  background-color: base.$secondary-color;
-  color: base.$primary-color;
+  color: lighten(base.$secondary-color, 20%);
+  background-color: (base.$primary-color);
   font-size: 1em;
   font-weight: 600;
   padding: 12px 24px;

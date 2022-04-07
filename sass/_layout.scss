@@ -10,52 +10,76 @@ h1 {
   color: base.$secondary-color;
   grid-column: 1/-1;
   font-size: 3em;
+  font-weight: 600;
 }
 h2 {
-  font-size: 1.5em;
+  font-size: 2em;
   color: base.$secondary-color;
-  font-weight: 100;
+  font-weight: 300;
   grid-column: 1/-1;
   padding: 2rem 0;
 }
 
 .form-container {
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
-  gap: 2rem;
+  grid-template-columns: 2fr 1fr;
+  gap: 5em;
+  margin-inline-start: 10vw;
 }
 form * {
   display: block;
 }
 form {
-  grid-column: 2/3;
   display: flex;
   align-items: flex-start;
   justify-content: center;
   flex-direction: column;
+  gap: 5px;
   padding: 2em;
   border-radius: 5px;
-  //   background-color: #24252e;
+  background-color: base.$secondary-color;
+  background-color: rgb(146 220 229 / 95%);
+
   box-shadow: 0 0.125rem 1rem rgb(27 40 50 / 4%), 0 0.125rem 2rem rgb(27 40 50 / 8%),
     0 0 0 0.0625rem rgb(27 40 50 / 2%);
-
+  div {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px 0;
+    width: 100%;
+    height: 60px;
+  }
   legend {
-    font-size: 1.5em;
-    font-weight: 100;
-    color: base.$accent-color;
+    font-size: 1.8em;
+    font-weight: 400;
+    color: base.$primary-color;
+    margin-bottom: 2rem;
   }
 
   label {
-    font-weight: 100;
-    font-size: 1em;
-    padding-top: 1rem;
-    color: base.$secondary-color;
+    font-weight: 400;
+    font-size: 1.1em;
+    color: base.$primary-color;
+    width: 30%;
   }
 
   input,
+  input:focus,
   select {
-    height: 40px;
-    font-size: 1.1em;
+    all: unset;
+    font-size: 1.5rem;
+    border-bottom: 2px solid base.$primary-color;
+    width: 70%;
+  }
+
+  input:focus + label {
+      font-weight: 600;
+  }
+
+  select:focus:not(:placeholder-shown) {
+    background-color: base.$primary-color;
+    color: base.$accent-color;
   }
 }
 
