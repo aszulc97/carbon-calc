@@ -20,7 +20,7 @@
         <h3>Website information</h3>
         <div>
           <label for="url">Enter URL:</label>
-          <input type="url" name="url" id="url" placeholder="https://adviceas.dk/" required />
+          <input type="text" name="url" id="url" placeholder="adviceas.dk" requireds />
         </div>
         <div>
           <!-- <label for="industry">Choose your industry</label>
@@ -37,19 +37,22 @@
             <option value="Energy"></option>
             <option value="Grocery store"></option>
           </datalist> -->
-          <label for="industry">Choose industry:</label>
-          <select name="industry" id="industry">
-            <option>Agriculture / Food Production</option>
-            <option>Financial sector</option>
-            <option>Clothing and fashion</option>
-            <option>Tech and computer</option>
-            <option>Construction</option>
-            <option>Transport</option>
-            <option>Culture, sports and the entertainment</option>
-            <option>Hotel and restaurant</option>
-            <option>Energy</option>
-            <option>Grocery store</option>
-            <option>Other</option>
+          <label for="industry">Industry:</label>
+          <select name="industry" id="industry" required>
+            <option value="" selected disabled>Choose industry</option>
+            <option value=" Agriculture / Food Production">Agriculture / Food Production</option>
+            <option value="Financial sector">Financial sector</option>
+            <option value="Clothing and fashion">Clothing and fashion</option>
+            <option value="Tech and computer">Tech and computer</option>
+            <option value="Construction">Construction</option>
+            <option value="Transport">Transport</option>
+            <option value="Culture, sports and the entertainment">
+              Culture, sports and the entertainment
+            </option>
+            <option value="Hotel and restaurant">Hotel and restaurant</option>
+            <option value="Energy">Energy</option>
+            <option value="Grocery store">Grocery store</option>
+            <option value="Other">Other</option>
           </select>
         </div>
         <button type="submit">Calculate</button>
