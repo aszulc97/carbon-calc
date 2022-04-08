@@ -6,6 +6,8 @@ const industry = urlParams.get("industry");
 const webCarbonURL = "https://kea-alt-del.dk/websitecarbon/site/?url=";
 const dbURL = "https://serialkillers-7bdb.restdb.io/rest/carboncalc";
 
+const carbonConstant = 0.0000006028619828;
+
 fetchData();
 let websiteData;
 
@@ -41,7 +43,13 @@ function showWebcarbonData(data) {
   checkDb();
   console.log(data);
   document.querySelector(".website").textContent = "Your website: " + website;
-  document.querySelector(".bytes").textContent = data.statistics.co2.grid.grams;
+  document.querySelector(".bytes").textContent = "Your website uses " + (data.bytes / 1024).toFixed(2) + " kilobytes";
+  document.querySelector(".co2").textContent =
+    "During one page load your website produces " + data.statistics.co2.grid.grams.toFixed(2) + "g of CO2";
+  document.querySelector(".co2year").textContent =
+    "With 10.000 users per month, your website is producing " +
+    (data.statistics.co2.grid.grams * 120).toFixed(2) +
+    "kg of CO2 per year";
   // run();
 }
 
