@@ -5,7 +5,7 @@ const website = urlParams.get("url");
 const industry = urlParams.get("industry");
 const webCarbonURL = "https://kea-alt-del.dk/websitecarbon/site/?url=";
 const dbURL = "https://serialkillers-7bdb.restdb.io/rest/carboncalc";
-
+let co2;
 const carbonConstant = 0.0000006028619828;
 
 fetchData();
@@ -40,17 +40,51 @@ function displayData(data) {
 }
 
 function showWebcarbonData(data) {
+  co2 = data.statistics.co2.grid.grams * 120;
   checkDb();
   console.log(data);
   document.querySelector(".website").textContent = "Your website: " + website;
-  document.querySelector(".bytes").textContent = "Your website uses " + (data.bytes / 1024).toFixed(2) + " kilobytes";
+  document.querySelector(".bytes").textContent =
+    "Your website uses " + (data.bytes / 1024).toFixed(2) + " kilobytes";
   document.querySelector(".co2").textContent =
-    "During one page load your website produces " + data.statistics.co2.grid.grams.toFixed(2) + "g of CO2";
+    "During one page load your website produces " +
+    data.statistics.co2.grid.grams.toFixed(2) +
+    "g of CO2";
   document.querySelector(".co2year").textContent =
     "With 10.000 users per month, your website is producing " +
-    (data.statistics.co2.grid.grams * 120).toFixed(2) +
+    co2.toFixed(2) +
     "kg of CO2 per year";
   // run();
+  document.querySelector("p.co2year").textContent =
+    "The same weight as" + " " + flightCalc() + " " + "flights from Copenhagen to London";
+
+  document.querySelector(".bike p").textContent =
+    "That is" + " " + bikeCalc() + " kWh of energy. That's enough to bike";
+
+  document.querySelector(".bigDog p").textContent =
+    "The same weight as" + " " + bigDog() + " " + "German Shephards";
+  document.querySelector(".smallDog p").textContent =
+    "The same weight as" + " " + smallDog() + " " + "Chiuahuas";
+
+  function flightCalc() {
+    return (co2 / 423).toFixed(1);
+  }
+
+  function bikeCalc() {
+    return (co2 / 0.11).toFixed(1);
+  }
+
+  // function bikeHoursCalc() {
+  //   return 0.11*
+  // }
+
+  function bigDog() {
+    return (co2 / 35).toFixed(1);
+  }
+
+  function smallDog() {
+    return (co2 / 2).toFixed(1);
+  }
 }
 
 function post(data, url) {
