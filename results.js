@@ -6,6 +6,7 @@ const industry = urlParams.get("industry");
 const webCarbonURL = "https://kea-alt-del.dk/websitecarbon/site/?url=";
 const dbURL = "https://serialkillers-7bdb.restdb.io/rest/carboncalc";
 let co2;
+let energy;
 const carbonConstant = 0.0000006028619828;
 
 fetchData();
@@ -41,6 +42,7 @@ function displayData(data) {
 
 function showWebcarbonData(data) {
   co2 = data.statistics.co2.grid.grams * 120;
+  energy = data.statistics.energy;
   checkDb();
   console.log(data);
   document.querySelector(".website").textContent = "Your website: " + website;
@@ -71,7 +73,7 @@ function showWebcarbonData(data) {
   }
 
   function bikeCalc() {
-    return (co2 / 0.11).toFixed(1);
+    return (energy / 0.11).toFixed(2);
   }
 
   // function bikeHoursCalc() {
