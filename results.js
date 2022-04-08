@@ -58,10 +58,15 @@ function showWebcarbonData(data) {
     "kg of CO2 per year";
   // run();
   document.querySelector("p.co2year").textContent =
-    "The same weight as" + " " + flightCalc() + " " + "flights from Copenhagen to London";
+    "The same weight of CO2 as" + " " + flightCalc() + " " + "flights from Copenhagen to London";
 
   document.querySelector(".bike p").textContent =
-    "That is" + " " + bikeCalc() + " kWh of energy. That's enough to bike";
+    "That is" +
+    " " +
+    energy.toFixed(3) +
+    " kWh of energy. That's enough to bike " +
+    bikeCalc() +
+    " hours";
 
   document.querySelector(".bigDog p").textContent =
     "The same weight as" + " " + bigDog() + " " + "German Shephards";
