@@ -1,4 +1,4 @@
-import { db_APIKEY } from "./config.js";
+import { google_APIKEY, db_APIKEY } from "./config.js";
 import "./sass/style.scss";
 const urlParams = new URLSearchParams(window.location.search);
 const website = urlParams.get("url");
@@ -12,11 +12,12 @@ fetchData();
 let websiteData;
 
 function fetchData() {
+  //start loading screen
   fetch(webCarbonURL + website)
     .then((res) => res.json())
     .then((data) => {
       websiteData = data;
-      showWebcarbonData(websiteData);
+      showWebCarbonData(websiteData);
     });
 }
 
@@ -39,8 +40,9 @@ function displayData(data) {
   }
 }
 
-function showWebcarbonData(data) {
+function showWebCarbonData(data) {
   checkDb();
+  getGoogleData();
   console.log(data);
   document.querySelector(".website").textContent = "Your website: " + website;
   document.querySelector(".bytes").textContent = "Your website uses " + (data.bytes / 1024).toFixed(2) + " kilobytes";
@@ -50,7 +52,6 @@ function showWebcarbonData(data) {
     "With 10.000 users per month, your website is producing " +
     (data.statistics.co2.grid.grams * 120).toFixed(2) +
     "kg of CO2 per year";
-  // run();
 }
 
 function post(data, url) {
@@ -99,24 +100,28 @@ function normalizeURL(url) {
   return normalizedURL;
 }
 
-// function showGoogleData(data) {
-//   console.log(data);
-//   document.querySelector("#mini").textContent = data.lighthouseResult.audits["unminified-javascript"].description;
-// }
+function showGoogleData(data) {
+  //hide the loading screen
+  document.querySelector(".images").textContent =
+    "If you would change your jpgs to webps, you would save " +
+    (data.lighthouseResult.audits["modern-image-formats"].details.overallSavingsBytes / 1024).toFixed(2) +
+    "kilobytes";
+  console.log(data);
+}
 
-// function run() {
-//   const url = setUpQuery();
-//   fetch(url)
-//     .then((response) => response.json())
-//     .then((data) => showGoogleData(data));
-// }
+function getGoogleData() {
+  const url = setUpQuery();
+  fetch(url)
+    .then((response) => response.json())
+    .then((data) => showGoogleData(data));
+}
 
-// function setUpQuery() {
-//   const api = "https://www.googleapis.com/pagespeedonline/v5/runPagespeed";
-//   const parameters = {
-//     url: website,
-//     key: APIKEY,
-//   };
-//   let query = `${api}?url=${parameters.url}&key=${parameters.key}`;
-//   return query;
-// }
+function setUpQuery() {
+  const api = "https://www.googleapis.com/pagespeedonline/v5/runPagespeed";
+  const parameters = {
+    url: normalizeURL(website),
+    key: google_APIKEY,
+  };
+  let query = `${api}?url=${parameters.url}&key=${parameters.key}`;
+  return query;
+}
