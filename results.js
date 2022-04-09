@@ -81,6 +81,7 @@ function post(data, url) {
 
 function normalizeURL(url) {
   let normalizedURL;
+  url = url.toLowerCase();
   url = url.split("://");
   console.log(url);
   if (url.length > 1) {
