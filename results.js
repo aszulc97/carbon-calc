@@ -7,47 +7,40 @@ const website = urlParams.get("url");
 const industry = urlParams.get("industry");
 const webCarbonURL = "https://kea-alt-del.dk/websitecarbon/site/?url=";
 const dbURL = "https://serialkillers-7bdb.restdb.io/rest/carboncalc";
-let dbData;
-
 const carbonConstant = 0.0000006028619828;
 
-fetchData();
-let websiteData;
+//to store database/api data
+let dbData;
+let currentWebsiteData;
 
-function fetchData() {
+let kilobytes;
+let co2;
+
+window.addEventListener("DOMContentLoaded", start);
+
+function start() {
+  fetchCarbonApiData();
+  fetchGoogleApiData();
+  get(); //get data from db, check for duplicates and post
+}
+
+function fetchCarbonApiData() {
   //start loading screen
   fetch(webCarbonURL + website)
     .then((res) => res.json())
     .then((data) => {
-      websiteData = data;
-      showWebCarbonData(websiteData);
+      currentWebsiteData = data;
+      setVariables();
+      displayAllData();
     });
 }
 
-function checkDb() {
-  fetch(dbURL, {
-    headers: {
-      "x-apikey": db_APIKEY,
-    },
-  })
-    .then((res) => res.json())
-    .then((data) => {
-      dbData = data;
-      displayData(data);
-    });
+function setVariables() {
+  kilobytes = currentWebsiteData.bytes / 1024;
+  co2 = currentWebsiteData.statistics.co2.grid.grams;
 }
 
-function displayData(data) {
-  let url = normalizeURL(website);
-  compare(url);
-  if (data.some((e) => e.URL === url)) {
-    console.log("data already in db");
-  } else {
-    post(websiteData, url);
-  }
-}
-
-function compare(url) {
+function compareWithinIndustry(url) {
   let filtered = dbData.filter((record) => {
     return record.industry == industry;
   });
@@ -63,56 +56,121 @@ function compare(url) {
   console.log("after", filtered);
 }
 
-function showWebCarbonData(data) {
-  checkDb();
-  getGoogleData();
-  console.log(data);
+function displayAllData() {
   document.querySelector(".website").textContent = "Your website: " + website;
-  document.querySelector(".bytes").textContent = "Your website uses " + (data.bytes / 1024).toFixed(2) + " kilobytes";
-  document.querySelector(".co2").textContent =
-    "During one page load your website produces " + data.statistics.co2.grid.grams.toFixed(2) + "g of CO2";
+  document.querySelector(".bytes").textContent = "Your website uses " + kilobytes.toFixed(2) + " kilobytes";
+  document.querySelector(".co2").textContent = "During one page load your website produces " + co2.toFixed(2) + "g of CO2";
   document.querySelector(".co2year").textContent =
-    "With 10.000 users per month, your website is producing " +
-    (data.statistics.co2.grid.grams * 120).toFixed(2) +
-    "kg of CO2 per year";
-  if (data.green === true) {
+    "With 10.000 users per month, your website is producing " + (co2 * 120).toFixed(2) + "kg of CO2 per year";
+
+  //green host checkbox
+  if (currentWebsiteData.green === true) {
     document.querySelector("#host").disabled = true; //todo: make it disappear
   } else {
     document.querySelector("#host").addEventListener("change", (e) => {
       if (e.target.checked) {
         document.querySelector(".co2").textContent =
-          "During one page load your website produces " + (data.statistics.co2.grid.grams * 0.91).toFixed(2) + "g of CO2";
+          "During one page load your website produces " + (co2 * 0.91).toFixed(2) + "g of CO2";
         document.querySelector(".co2year").textContent =
-          "With 10.000 users per month, your website is producing " +
-          (data.statistics.co2.grid.grams * 109.2).toFixed(2) +
-          "kg of CO2 per year";
+          "With 10.000 users per month, your website is producing " + (co2 * 109.2).toFixed(2) + "kg of CO2 per year";
       } else {
-        document.querySelector(".co2").textContent =
-          "During one page load your website produces " + data.statistics.co2.grid.grams.toFixed(2) + "g of CO2";
+        document.querySelector(".co2").textContent = "During one page load your website produces " + co2.toFixed(2) + "g of CO2";
         document.querySelector(".co2year").textContent =
-          "With 10.000 users per month, your website is producing " +
-          (data.statistics.co2.grid.grams * 120).toFixed(2) +
-          "kg of CO2 per year";
+          "With 10.000 users per month, your website is producing " + (co2 * 120).toFixed(2) + "kg of CO2 per year";
       }
     });
   }
 }
 
+function showGoogleData(data) {
+  //hide the loading screen
+  let webPSavings = data.lighthouseResult.audits["modern-image-formats"].details.overallSavingsBytes / 1024;
+  document.querySelector(".images").textContent =
+    "If you would change your jpgs to webps, you would save " + webPSavings.toFixed(2) + "kilobytes";
+
+  //webp images checkbox
+  if ((webPSavings / 1024).toFixed(2) == 0) {
+    document.querySelector("#webp").disabled = true; //todo: make it disappear
+  } else {
+    document.querySelector("#webp").addEventListener("change", (e) => {
+      if (e.target.checked) {
+        document.querySelector(".bytes").textContent = "Your website uses " + (kilobytes - webPSavings).toFixed(2) + " kilobytes";
+        document.querySelector(".co2").textContent =
+          "During one page load your website produces " +
+          ((kilobytes - webPSavings) * carbonConstant * 1024).toFixed(2) +
+          "g of CO2";
+        document.querySelector(".co2year").textContent =
+          "With 10.000 users per month, your website is producing " +
+          ((kilobytes - webPSavings) * carbonConstant * 1024 * 120).toFixed(2) +
+          "kg of CO2 per year";
+      } else {
+        document.querySelector(".bytes").textContent = "Your website uses " + kilobytes.toFixed(2) + " kilobytes";
+        document.querySelector(".co2").textContent = "During one page load your website produces " + co2.toFixed(2) + "g of CO2";
+        document.querySelector(".co2year").textContent =
+          "With 10.000 users per month, your website is producing " + (co2 * 120).toFixed(2) + "kg of CO2 per year";
+      }
+    });
+  }
+  console.log(data);
+}
+
+function fetchGoogleApiData() {
+  const url = setUpQuery();
+  fetch(url)
+    .then((response) => response.json())
+    .then((data) => showGoogleData(data));
+}
+
+function setUpQuery() {
+  const api = "https://www.googleapis.com/pagespeedonline/v5/runPagespeed";
+  const parameters = {
+    url: normalizeURL(website),
+    key: google_APIKEY,
+  };
+  let query = `${api}?url=${parameters.url}&key=${parameters.key}`;
+  return query;
+}
+
+//all database operations
+function get() {
+  fetch(dbURL, {
+    headers: {
+      "x-apikey": db_APIKEY,
+    },
+  })
+    .then((res) => res.json())
+    .then((data) => {
+      dbData = data;
+      checkForDbDuplicates(data);
+    });
+}
+
+function checkForDbDuplicates(data) {
+  let url = normalizeURL(website);
+  compareWithinIndustry(url);
+  if (data.some((e) => e.URL === url)) {
+    console.log("url already in the database");
+  } else {
+    post(currentWebsiteData, url);
+  }
+}
+
 function post(data, url) {
-  console.log("data", data);
   const newURL = {
     URL: url,
     totalbytes: data.bytes,
-    co2: data.statistics.co2.grid.grams,
+    co2: co2,
     greenhost: data.green,
     industry: industry,
-    points: data.statistics.co2.grid.grams.toFixed(2), //used to compare within industry
+    points: co2.toFixed(2), //used to compare within industry
   };
+
   if (data.green === "unknown") {
     newURL.greenhost = false;
   } else {
     newURL.points = (newURL.points * 0.91).toFixed(2); //having a green host reduces co2 production by 9%
   }
+
   const postData = JSON.stringify(newURL);
   fetch(dbURL, {
     method: "post",
@@ -122,7 +180,7 @@ function post(data, url) {
     },
     body: postData,
   }).then((res) => res.json());
-  //.then((data) => displayCar(data));
+
   console.log("posted");
 }
 
@@ -146,30 +204,4 @@ function normalizeURL(url) {
     normalizedURL = normalizedURL.slice(0, -1);
   }
   return normalizedURL;
-}
-
-function showGoogleData(data) {
-  //hide the loading screen
-  document.querySelector(".images").textContent =
-    "If you would change your jpgs to webps, you would save " +
-    (data.lighthouseResult.audits["modern-image-formats"].details.overallSavingsBytes / 1024).toFixed(2) +
-    "kilobytes";
-  console.log(data);
-}
-
-function getGoogleData() {
-  const url = setUpQuery();
-  fetch(url)
-    .then((response) => response.json())
-    .then((data) => showGoogleData(data));
-}
-
-function setUpQuery() {
-  const api = "https://www.googleapis.com/pagespeedonline/v5/runPagespeed";
-  const parameters = {
-    url: normalizeURL(website),
-    key: google_APIKEY,
-  };
-  let query = `${api}?url=${parameters.url}&key=${parameters.key}`;
-  return query;
 }
