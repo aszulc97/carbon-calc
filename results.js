@@ -1,5 +1,7 @@
 import { google_APIKEY, db_APIKEY } from "./config.js";
 import "./sass/style.scss";
+import ord from "ord";
+
 const urlParams = new URLSearchParams(window.location.search);
 const website = urlParams.get("url");
 const industry = urlParams.get("industry");
@@ -49,8 +51,16 @@ function compare(url) {
   let filtered = dbData.filter((record) => {
     return record.industry == industry;
   });
-
-  console.log("industry", filtered);
+  filtered.sort((a, b) => a.points - b.points);
+  console.log("url", url);
+  let index = filtered.map((object) => object.URL).indexOf(url) + 1;
+  document.querySelector(".comparison").textContent =
+    "We have tested " +
+    filtered.length +
+    " websites within your industry. In order from the cleanest to the dirtiest, your website is " +
+    index +
+    ord(index);
+  console.log("after", filtered);
 }
 
 function showWebCarbonData(data) {
@@ -80,7 +90,7 @@ function post(data, url) {
   if (data.green === "unknown") {
     newURL.greenhost = false;
   } else {
-    newURL.points = newURL.points * 0.91; //having a green host reduces co2 production by 9%
+    newURL.points = (newURL.points * 0.91).toFixed(2); //having a green host reduces co2 production by 9%
   }
   const postData = JSON.stringify(newURL);
   fetch(dbURL, {
