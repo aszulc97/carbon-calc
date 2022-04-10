@@ -75,6 +75,27 @@ function showWebCarbonData(data) {
     "With 10.000 users per month, your website is producing " +
     (data.statistics.co2.grid.grams * 120).toFixed(2) +
     "kg of CO2 per year";
+  if (data.green === true) {
+    document.querySelector("#host").disabled = true; //todo: make it disappear
+  } else {
+    document.querySelector("#host").addEventListener("change", (e) => {
+      if (e.target.checked) {
+        document.querySelector(".co2").textContent =
+          "During one page load your website produces " + (data.statistics.co2.grid.grams * 0.91).toFixed(2) + "g of CO2";
+        document.querySelector(".co2year").textContent =
+          "With 10.000 users per month, your website is producing " +
+          (data.statistics.co2.grid.grams * 109.2).toFixed(2) +
+          "kg of CO2 per year";
+      } else {
+        document.querySelector(".co2").textContent =
+          "During one page load your website produces " + data.statistics.co2.grid.grams.toFixed(2) + "g of CO2";
+        document.querySelector(".co2year").textContent =
+          "With 10.000 users per month, your website is producing " +
+          (data.statistics.co2.grid.grams * 120).toFixed(2) +
+          "kg of CO2 per year";
+      }
+    });
+  }
 }
 
 function post(data, url) {
