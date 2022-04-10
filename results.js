@@ -5,6 +5,7 @@ const website = urlParams.get("url");
 const industry = urlParams.get("industry");
 const webCarbonURL = "https://kea-alt-del.dk/websitecarbon/site/?url=";
 const dbURL = "https://serialkillers-7bdb.restdb.io/rest/carboncalc";
+let dbData;
 
 const carbonConstant = 0.0000006028619828;
 
@@ -28,16 +29,28 @@ function checkDb() {
     },
   })
     .then((res) => res.json())
-    .then((data) => displayData(data));
+    .then((data) => {
+      dbData = data;
+      displayData(data);
+    });
 }
 
 function displayData(data) {
   let url = normalizeURL(website);
+  compare(url);
   if (data.some((e) => e.URL === url)) {
     console.log("data already in db");
   } else {
     post(websiteData, url);
   }
+}
+
+function compare(url) {
+  let filtered = dbData.filter((record) => {
+    return record.industry == industry;
+  });
+
+  console.log("industry", filtered);
 }
 
 function showWebCarbonData(data) {
@@ -62,9 +75,12 @@ function post(data, url) {
     co2: data.statistics.co2.grid.grams,
     greenhost: data.green,
     industry: industry,
+    points: data.statistics.co2.grid.grams.toFixed(2), //used to compare within industry
   };
   if (data.green === "unknown") {
     newURL.greenhost = false;
+  } else {
+    newURL.points = newURL.points * 0.91; //having a green host reduces co2 production by 9%
   }
   const postData = JSON.stringify(newURL);
   fetch(dbURL, {
