@@ -9,6 +9,8 @@ const webCarbonURL = "https://kea-alt-del.dk/websitecarbon/site/?url=";
 const dbURL = "https://serialkillers-7bdb.restdb.io/rest/carboncalc";
 let dbData;
 
+let co2;
+let energy;
 const carbonConstant = 0.0000006028619828;
 
 fetchData();
@@ -64,17 +66,58 @@ function compare(url) {
 }
 
 function showWebCarbonData(data) {
+  co2 = data.statistics.co2.grid.grams * 120;
+  energy = data.statistics.energy;
   checkDb();
   getGoogleData();
   console.log(data);
   document.querySelector(".website").textContent = "Your website: " + website;
-  document.querySelector(".bytes").textContent = "Your website uses " + (data.bytes / 1024).toFixed(2) + " kilobytes";
+  document.querySelector(".bytes").textContent =
+    "Your website uses " + (data.bytes / 1024).toFixed(2) + " kilobytes";
   document.querySelector(".co2").textContent =
-    "During one page load your website produces " + data.statistics.co2.grid.grams.toFixed(2) + "g of CO2";
+    "During one page load your website produces " +
+    data.statistics.co2.grid.grams.toFixed(2) +
+    "g of CO2";
   document.querySelector(".co2year").textContent =
     "With 10.000 users per month, your website is producing " +
-    (data.statistics.co2.grid.grams * 120).toFixed(2) +
+    co2.toFixed(2) +
     "kg of CO2 per year";
+  // run();
+  document.querySelector("p.co2year").textContent =
+    "The same weight of CO2 as" + " " + flightCalc() + " " + "flights from Copenhagen to London";
+
+  document.querySelector(".bike p").textContent =
+    "That is" +
+    " " +
+    energy.toFixed(3) +
+    " kWh of energy. That's enough to bike " +
+    bikeCalc() +
+    " hours";
+
+  document.querySelector(".bigDog p").textContent =
+    "The same weight as" + " " + bigDog() + " " + "German Shephards";
+  document.querySelector(".smallDog p").textContent =
+    "The same weight as" + " " + smallDog() + " " + "Chiuahuas";
+
+  function flightCalc() {
+    return (co2 / 423).toFixed(1);
+  }
+
+  function bikeCalc() {
+    return (energy / 0.11).toFixed(2);
+  }
+
+  // function bikeHoursCalc() {
+  //   return 0.11*
+  // }
+
+  function bigDog() {
+    return (co2 / 35).toFixed(1);
+  }
+
+  function smallDog() {
+    return (co2 / 2).toFixed(1);
+  }
 }
 
 function post(data, url) {
@@ -131,7 +174,9 @@ function showGoogleData(data) {
   //hide the loading screen
   document.querySelector(".images").textContent =
     "If you would change your jpgs to webps, you would save " +
-    (data.lighthouseResult.audits["modern-image-formats"].details.overallSavingsBytes / 1024).toFixed(2) +
+    (
+      data.lighthouseResult.audits["modern-image-formats"].details.overallSavingsBytes / 1024
+    ).toFixed(2) +
     "kilobytes";
   console.log(data);
 }

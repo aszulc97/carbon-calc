@@ -110,6 +110,47 @@ article {
   }
 }
 
+.results {
+  color: base.$accent-color;
+  .website {
+    font-size: 2em;
+  }
+  .bytes {
+    font-size: 5em;
+    width: 70%;
+    margin: 0 auto;
+  }
+
+  .co2{
+    font-size: 2em;
+  }
+  path {
+    fill: white;
+  }
+  ul {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(500px, 1fr));
+    margin-top: 2rem;
+  }
+  li {
+    list-style: none;
+    border: 5px solid aqua;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    gap: 2rem;
+    padding: 2rem;
+    h3 {
+      color: base.$secondary-color;
+      font-size: 2em;
+    }
+    p {
+      font-size: 1.3em;
+    }
+  }
+}
+
 // MEDIA QUERIES
 
 // MIN
