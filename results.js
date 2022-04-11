@@ -18,6 +18,8 @@ let websiteData;
 
 function fetchData() {
   //start loading screen
+  // document.querySelector("main").classList.add("hidden");
+  document.querySelector(".loading-container").classList.remove("hidden");
   fetch(webCarbonURL + website)
     .then((res) => res.json())
     .then((data) => {
@@ -172,6 +174,8 @@ function normalizeURL(url) {
 
 function showGoogleData(data) {
   //hide the loading screen
+  document.querySelector("main").classList.remove("hidden");
+  document.querySelector(".loading-container").classList.add("hidden");
   document.querySelector(".images").textContent =
     "If you would change your jpgs to webps, you would save " +
     (

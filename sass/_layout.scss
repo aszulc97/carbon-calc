@@ -3,6 +3,9 @@
 body {
   font-size: 20px;
   background-color: base.$primary-color;
+}
+
+main {
   padding: 2rem;
 }
 
@@ -38,7 +41,8 @@ form {
   border-radius: 5px;
   background-color: base.$secondary-color;
   background-color: rgb(146 220 229 / 95%);
-  box-shadow: 0 0.125rem 1rem rgb(27 40 50 / 4%), 0 0.125rem 2rem rgb(27 40 50 / 8%), 0 0 0 0.0625rem rgb(27 40 50 / 2%);
+  box-shadow: 0 0.125rem 1rem rgb(27 40 50 / 4%), 0 0.125rem 2rem rgb(27 40 50 / 8%),
+    0 0 0 0.0625rem rgb(27 40 50 / 2%);
 
   display: grid;
   grid-template-columns: auto 1fr;
@@ -121,7 +125,7 @@ article {
     margin: 0 auto;
   }
 
-  .co2{
+  .co2 {
     font-size: 2em;
   }
   path {
