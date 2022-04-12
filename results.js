@@ -13,6 +13,9 @@ const carbonConstant = 0.0000006028619828;
 let dbData;
 let currentWebsiteData;
 
+let webPSavings;
+let unusedCodeSavings;
+
 let kilobytes;
 let co2;
 
@@ -36,6 +39,7 @@ function fetchCarbonApiData() {
     });
 }
 
+//greenhost checkbox
 function greenhostCheckboxCheck() {
   if (currentWebsiteData.green === true) {
     document.querySelector("#host").disabled = true; //todo: make it disappear
@@ -48,10 +52,57 @@ function changeHost(checkbox) {
   if (checkbox.checked) {
     co2 = co2 * 0.91;
   } else {
-    setVariables();
+    co2 = co2 / 0.91;
   }
   displayData();
 }
+
+//webp images checkbox
+function webpCheckboxCheck() {
+  if (webPSavings == 0) {
+    document.querySelector("#webp").disabled = true; //todo: make it disappear
+  } else {
+    document.querySelector("#webp").addEventListener("change", (e) => changeToWebP(e.target));
+  }
+}
+
+function changeToWebP(checkbox) {
+  if (checkbox.checked) {
+    kilobytes = kilobytes - webPSavings;
+  } else {
+    kilobytes = kilobytes + webPSavings;
+  }
+  co2 = kilobytes * carbonConstant * 1024;
+  if (document.querySelector("#host").checked) co2 = co2 * 0.91;
+  displayData();
+}
+
+//unused CSS & JS
+function unusedCodeCheck() {
+  if (unusedCodeSavings == 0) {
+    document.querySelector("#unused").disabled = true; //todo: make it disappear
+  } else {
+    document.querySelector("#unused").addEventListener("change", (e) => removeUnused(e.target));
+  }
+}
+
+function removeUnused(checkbox) {
+  if (checkbox.checked) {
+    kilobytes = kilobytes - unusedCodeSavings;
+  } else {
+    kilobytes = kilobytes + unusedCodeSavings;
+  }
+  co2 = kilobytes * carbonConstant * 1024;
+  if (document.querySelector("#host").checked) co2 = co2 * 0.91;
+  displayData();
+}
+
+// function checkboxesChecker() {
+//   if (document.querySelector("#host").checked) changeHost(document.querySelector("#host"));
+//   else if (document.querySelector("#webp").checked) changeToWebP(document.querySelector("#webp"));
+//   else if (document.querySelector("#unused").checked) removeUnused(document.querySelector("#unused"));
+//   else setVariables();
+// }
 
 function setVariables() {
   kilobytes = currentWebsiteData.bytes / 1024;
@@ -84,33 +135,16 @@ function displayData() {
 
 function showGoogleData(data) {
   //hide the loading screen
-  let webPSavings = data.lighthouseResult.audits["modern-image-formats"].details.overallSavingsBytes / 1024;
+  webPSavings = data.lighthouseResult.audits["modern-image-formats"].details.overallSavingsBytes / 1024;
+  unusedCodeSavings =
+    data.lighthouseResult.audits["unused-css-rules"].details.overallSavingsBytes / 1024 +
+    data.lighthouseResult.audits["unused-javascript"].details.overallSavingsBytes / 1024;
+
   document.querySelector(".images").textContent =
     "If you would change your jpgs to webps, you would save " + webPSavings.toFixed(2) + "kilobytes";
-
-  //webp images checkbox
-  if ((webPSavings / 1024).toFixed(2) == 0) {
-    document.querySelector("#webp").disabled = true; //todo: make it disappear
-  } else {
-    document.querySelector("#webp").addEventListener("change", (e) => {
-      if (e.target.checked) {
-        document.querySelector(".bytes").textContent = "Your website uses " + (kilobytes - webPSavings).toFixed(2) + " kilobytes";
-        document.querySelector(".co2").textContent =
-          "During one page load your website produces " +
-          ((kilobytes - webPSavings) * carbonConstant * 1024).toFixed(2) +
-          "g of CO2";
-        document.querySelector(".co2year").textContent =
-          "With 10.000 users per month, your website is producing " +
-          ((kilobytes - webPSavings) * carbonConstant * 1024 * 120).toFixed(2) +
-          "kg of CO2 per year";
-      } else {
-        document.querySelector(".bytes").textContent = "Your website uses " + kilobytes.toFixed(2) + " kilobytes";
-        document.querySelector(".co2").textContent = "During one page load your website produces " + co2.toFixed(2) + "g of CO2";
-        document.querySelector(".co2year").textContent =
-          "With 10.000 users per month, your website is producing " + (co2 * 120).toFixed(2) + "kg of CO2 per year";
-      }
-    });
-  }
+  document.querySelector(".unused").textContent = "If you would delete unused" + unusedCodeSavings.toFixed(2) + "kilobytes";
+  webpCheckboxCheck();
+  unusedCodeCheck();
   console.log(data);
 }
 
