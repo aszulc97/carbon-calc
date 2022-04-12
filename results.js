@@ -31,8 +31,26 @@ function fetchCarbonApiData() {
     .then((data) => {
       currentWebsiteData = data;
       setVariables();
-      displayAllData();
+      greenhostCheckboxCheck();
+      displayData();
     });
+}
+
+function greenhostCheckboxCheck() {
+  if (currentWebsiteData.green === true) {
+    document.querySelector("#host").disabled = true; //todo: make it disappear
+  } else {
+    document.querySelector("#host").addEventListener("change", (e) => changeHost(e.target));
+  }
+}
+
+function changeHost(checkbox) {
+  if (checkbox.checked) {
+    co2 = co2 * 0.91;
+  } else {
+    setVariables();
+  }
+  displayData();
 }
 
 function setVariables() {
@@ -56,30 +74,12 @@ function compareWithinIndustry(url) {
   console.log("after", filtered);
 }
 
-function displayAllData() {
+function displayData() {
   document.querySelector(".website").textContent = "Your website: " + website;
   document.querySelector(".bytes").textContent = "Your website uses " + kilobytes.toFixed(2) + " kilobytes";
   document.querySelector(".co2").textContent = "During one page load your website produces " + co2.toFixed(2) + "g of CO2";
   document.querySelector(".co2year").textContent =
     "With 10.000 users per month, your website is producing " + (co2 * 120).toFixed(2) + "kg of CO2 per year";
-
-  //green host checkbox
-  if (currentWebsiteData.green === true) {
-    document.querySelector("#host").disabled = true; //todo: make it disappear
-  } else {
-    document.querySelector("#host").addEventListener("change", (e) => {
-      if (e.target.checked) {
-        document.querySelector(".co2").textContent =
-          "During one page load your website produces " + (co2 * 0.91).toFixed(2) + "g of CO2";
-        document.querySelector(".co2year").textContent =
-          "With 10.000 users per month, your website is producing " + (co2 * 109.2).toFixed(2) + "kg of CO2 per year";
-      } else {
-        document.querySelector(".co2").textContent = "During one page load your website produces " + co2.toFixed(2) + "g of CO2";
-        document.querySelector(".co2year").textContent =
-          "With 10.000 users per month, your website is producing " + (co2 * 120).toFixed(2) + "kg of CO2 per year";
-      }
-    });
-  }
 }
 
 function showGoogleData(data) {
