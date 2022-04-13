@@ -97,13 +97,6 @@ function removeUnused(checkbox) {
   displayData();
 }
 
-// function checkboxesChecker() {
-//   if (document.querySelector("#host").checked) changeHost(document.querySelector("#host"));
-//   else if (document.querySelector("#webp").checked) changeToWebP(document.querySelector("#webp"));
-//   else if (document.querySelector("#unused").checked) removeUnused(document.querySelector("#unused"));
-//   else setVariables();
-// }
-
 function setVariables() {
   kilobytes = currentWebsiteData.bytes / 1024;
   co2 = currentWebsiteData.statistics.co2.grid.grams;
