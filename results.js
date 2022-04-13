@@ -1,4 +1,4 @@
-const { google_APIKEY, db_APIKEY } = process.env;
+//const { google_APIKEY, db_APIKEY } = process.env;
 //import { google_APIKEY, db_APIKEY } from "./config.js";
 import "./sass/style.scss";
 import ord from "ord";
