@@ -8,7 +8,10 @@ const industry = urlParams.get("industry");
 const webCarbonURL = "https://kea-alt-del.dk/websitecarbon/site/?url=";
 const dbURL = "https://serialkillers-7bdb.restdb.io/rest/carboncalc";
 
+//bytes to co2 ratio from web carbon api
 const carbonConstant = 0.0000006028619828;
+//bytes to adjusted bytes (0.755), then multiplied by adjusted bytes to energy ratio
+const energyConstant = 0.755 * 0.000000001681037247;
 
 //to store database/api data
 let dbData;
@@ -77,6 +80,7 @@ function changeToWebP(checkbox) {
     kilobytes = kilobytes + webPSavings;
   }
   co2 = kilobytes * carbonConstant * 1024;
+  energy = kilobytes * energyConstant * 1024;
   if (document.querySelector("#host").checked) co2 = co2 * 0.91;
   displayData();
 }
@@ -97,6 +101,7 @@ function removeUnused(checkbox) {
     kilobytes = kilobytes + unusedCodeSavings;
   }
   co2 = kilobytes * carbonConstant * 1024;
+  energy = kilobytes * energyConstant * 1024;
   if (document.querySelector("#host").checked) co2 = co2 * 0.91;
   displayData();
 }
@@ -128,7 +133,7 @@ function flightCalc() {
 }
 
 function bikeCalc() {
-  return (energy / 0.11).toFixed(2);
+  return (energy * 120000).toFixed(2);
 }
 
 function bigDog() {
@@ -149,7 +154,15 @@ function displayData() {
     "The same weight of CO2 as " + flightCalc() + " flights from Copenhagen to London";
 
   document.querySelector(".bike p").textContent =
-    "That is " + energy.toFixed(3) + " kWh of energy. That's enough to bike " + bikeCalc() + " hours";
+    "That is " +
+    bikeCalc() +
+    " kWh of energy. That's enough to bike for " +
+    (bikeCalc() / 0.11).toFixed(2) +
+    " hours. During this time you can make circa " +
+    ((bikeCalc() / 0.11) * 15).toFixed(2) +
+    " kilometers, which is " +
+    (((bikeCalc() / 0.11) * 15) / 40000).toFixed(2) +
+    " times the distance all the way around the equator";
 
   document.querySelector(".bigDog p").textContent = "The same weight as " + bigDog() + " German Shephards";
   document.querySelector(".smallDog p").textContent = "The same weight as " + smallDog() + " Chihuahuas";
