@@ -7,51 +7,107 @@ const website = urlParams.get("url");
 const industry = urlParams.get("industry");
 const webCarbonURL = "https://kea-alt-del.dk/websitecarbon/site/?url=";
 const dbURL = "https://serialkillers-7bdb.restdb.io/rest/carboncalc";
-let dbData;
 
-let co2;
-let energy;
 const carbonConstant = 0.0000006028619828;
 
-fetchData();
-let websiteData;
+//to store database/api data
+let dbData;
+let currentWebsiteData;
 
-function fetchData() {
+let webPSavings;
+let unusedCodeSavings;
+
+let kilobytes;
+let co2;
+let energy;
+
+window.addEventListener("DOMContentLoaded", start);
+
+function start() {
+  fetchCarbonApiData();
+  fetchGoogleApiData();
+  get(); //get data from db, check for duplicates and post
+}
+
+function fetchCarbonApiData() {
   //start loading screen
   // document.querySelector("main").classList.add("hidden");
   document.querySelector(".loading-container").classList.remove("hidden");
   fetch(webCarbonURL + website)
     .then((res) => res.json())
     .then((data) => {
-      websiteData = data;
-      showWebCarbonData(websiteData);
+      currentWebsiteData = data;
+      setVariables();
+      greenhostCheckboxCheck();
+      displayData();
     });
 }
 
-function checkDb() {
-  fetch(dbURL, {
-    headers: {
-      "x-apikey": db_APIKEY,
-    },
-  })
-    .then((res) => res.json())
-    .then((data) => {
-      dbData = data;
-      displayData(data);
-    });
-}
-
-function displayData(data) {
-  let url = normalizeURL(website);
-  compare(url);
-  if (data.some((e) => e.URL === url)) {
-    console.log("data already in db");
+//greenhost checkbox
+function greenhostCheckboxCheck() {
+  if (currentWebsiteData.green === true) {
+    document.querySelector("#host").disabled = true; //todo: make it disappear
   } else {
-    post(websiteData, url);
+    document.querySelector("#host").addEventListener("change", (e) => changeHost(e.target));
   }
 }
 
-function compare(url) {
+function changeHost(checkbox) {
+  if (checkbox.checked) {
+    co2 = co2 * 0.91;
+  } else {
+    co2 = co2 / 0.91;
+  }
+  displayData();
+}
+
+//webp images checkbox
+function webpCheckboxCheck() {
+  if (webPSavings == 0) {
+    document.querySelector("#webp").disabled = true; //todo: make it disappear
+  } else {
+    document.querySelector("#webp").addEventListener("change", (e) => changeToWebP(e.target));
+  }
+}
+
+function changeToWebP(checkbox) {
+  if (checkbox.checked) {
+    kilobytes = kilobytes - webPSavings;
+  } else {
+    kilobytes = kilobytes + webPSavings;
+  }
+  co2 = kilobytes * carbonConstant * 1024;
+  if (document.querySelector("#host").checked) co2 = co2 * 0.91;
+  displayData();
+}
+
+//unused CSS & JS
+function unusedCodeCheck() {
+  if (unusedCodeSavings == 0) {
+    document.querySelector("#unused").disabled = true; //todo: make it disappear
+  } else {
+    document.querySelector("#unused").addEventListener("change", (e) => removeUnused(e.target));
+  }
+}
+
+function removeUnused(checkbox) {
+  if (checkbox.checked) {
+    kilobytes = kilobytes - unusedCodeSavings;
+  } else {
+    kilobytes = kilobytes + unusedCodeSavings;
+  }
+  co2 = kilobytes * carbonConstant * 1024;
+  if (document.querySelector("#host").checked) co2 = co2 * 0.91;
+  displayData();
+}
+
+function setVariables() {
+  kilobytes = currentWebsiteData.bytes / 1024;
+  co2 = currentWebsiteData.statistics.co2.grid.grams;
+  energy = currentWebsiteData.statistics.energy;
+}
+
+function compareWithinIndustry(url) {
   let filtered = dbData.filter((record) => {
     return record.industry == industry;
   });
@@ -67,76 +123,112 @@ function compare(url) {
   console.log("after", filtered);
 }
 
-function showWebCarbonData(data) {
-  co2 = data.statistics.co2.grid.grams * 120;
-  energy = data.statistics.energy;
-  checkDb();
-  getGoogleData();
-  console.log(data);
+function flightCalc() {
+  return ((co2 * 120) / 423).toFixed(1);
+}
+
+function bikeCalc() {
+  return (energy / 0.11).toFixed(2);
+}
+
+function bigDog() {
+  return ((co2 * 120) / 35).toFixed(1);
+}
+
+function smallDog() {
+  return ((co2 * 120) / 2).toFixed(1);
+}
+
+function displayData() {
   document.querySelector(".website").textContent = "Your website: " + website;
-  document.querySelector(".bytes").textContent =
-    "Your website uses " + (data.bytes / 1024).toFixed(2) + " kilobytes";
-  document.querySelector(".co2").textContent =
-    "During one page load your website produces " +
-    data.statistics.co2.grid.grams.toFixed(2) +
-    "g of CO2";
+  document.querySelector(".bytes").textContent = "Your website uses " + kilobytes.toFixed(2) + " kilobytes";
+  document.querySelector(".co2").textContent = "During one page load your website produces " + co2.toFixed(2) + "g of CO2";
   document.querySelector(".co2year").textContent =
-    "With 10.000 users per month, your website is producing " +
-    co2.toFixed(2) +
-    "kg of CO2 per year";
-  // run();
+    "With 10.000 users per month, your website is producing " + (co2 * 120).toFixed(2) + "kg of CO2 per year";
   document.querySelector("p.co2year").textContent =
-    "The same weight of CO2 as" + " " + flightCalc() + " " + "flights from Copenhagen to London";
+    "The same weight of CO2 as " + flightCalc() + " flights from Copenhagen to London";
 
   document.querySelector(".bike p").textContent =
-    "That is" +
-    " " +
-    energy.toFixed(3) +
-    " kWh of energy. That's enough to bike " +
-    bikeCalc() +
-    " hours";
+    "That is " + energy.toFixed(3) + " kWh of energy. That's enough to bike " + bikeCalc() + " hours";
 
-  document.querySelector(".bigDog p").textContent =
-    "The same weight as" + " " + bigDog() + " " + "German Shephards";
-  document.querySelector(".smallDog p").textContent =
-    "The same weight as" + " " + smallDog() + " " + "Chiuahuas";
+  document.querySelector(".bigDog p").textContent = "The same weight as " + bigDog() + " German Shephards";
+  document.querySelector(".smallDog p").textContent = "The same weight as " + smallDog() + " Chihuahuas";
+}
 
-  function flightCalc() {
-    return (co2 / 423).toFixed(1);
-  }
+function showGoogleData(data) {
+  document.querySelector("main").classList.remove("hidden");
+  document.querySelector(".loading-container").classList.add("hidden");
+  webPSavings = data.lighthouseResult.audits["modern-image-formats"].details.overallSavingsBytes / 1024;
+  unusedCodeSavings =
+    data.lighthouseResult.audits["unused-css-rules"].details.overallSavingsBytes / 1024 +
+    data.lighthouseResult.audits["unused-javascript"].details.overallSavingsBytes / 1024;
 
-  function bikeCalc() {
-    return (energy / 0.11).toFixed(2);
-  }
+  document.querySelector(".images").textContent =
+    "If you would change your jpgs to webps, you would save " + webPSavings.toFixed(2) + "kilobytes";
+  document.querySelector(".unused").textContent =
+    "If you would delete unused CSS rules and JavaScript, you would save " + unusedCodeSavings.toFixed(2) + " kilobytes";
+  webpCheckboxCheck();
+  unusedCodeCheck();
+  console.log(data);
+}
 
-  // function bikeHoursCalc() {
-  //   return 0.11*
-  // }
+function fetchGoogleApiData() {
+  const url = setUpQuery();
+  fetch(url)
+    .then((response) => response.json())
+    .then((data) => showGoogleData(data));
+}
 
-  function bigDog() {
-    return (co2 / 35).toFixed(1);
-  }
+function setUpQuery() {
+  const api = "https://www.googleapis.com/pagespeedonline/v5/runPagespeed";
+  const parameters = {
+    url: normalizeURL(website),
+    key: google_APIKEY,
+  };
+  let query = `${api}?url=${parameters.url}&key=${parameters.key}`;
+  return query;
+}
 
-  function smallDog() {
-    return (co2 / 2).toFixed(1);
+//all database operations
+function get() {
+  fetch(dbURL, {
+    headers: {
+      "x-apikey": db_APIKEY,
+    },
+  })
+    .then((res) => res.json())
+    .then((data) => {
+      dbData = data;
+      checkForDbDuplicates(data);
+    });
+}
+
+function checkForDbDuplicates(data) {
+  let url = normalizeURL(website);
+  compareWithinIndustry(url);
+  if (data.some((e) => e.URL === url)) {
+    console.log("url already in the database");
+  } else {
+    post(currentWebsiteData, url);
   }
 }
 
 function post(data, url) {
-  console.log("data", data);
   const newURL = {
     URL: url,
     totalbytes: data.bytes,
-    co2: data.statistics.co2.grid.grams,
+    co2: co2,
     greenhost: data.green,
     industry: industry,
-    points: data.statistics.co2.grid.grams.toFixed(2), //used to compare within industry
+    points: co2.toFixed(2), //used to compare within industry
   };
+
   if (data.green === "unknown") {
     newURL.greenhost = false;
   } else {
     newURL.points = (newURL.points * 0.91).toFixed(2); //having a green host reduces co2 production by 9%
   }
+
   const postData = JSON.stringify(newURL);
   fetch(dbURL, {
     method: "post",
@@ -146,7 +238,7 @@ function post(data, url) {
     },
     body: postData,
   }).then((res) => res.json());
-  //.then((data) => displayCar(data));
+
   console.log("posted");
 }
 
@@ -170,34 +262,4 @@ function normalizeURL(url) {
     normalizedURL = normalizedURL.slice(0, -1);
   }
   return normalizedURL;
-}
-
-function showGoogleData(data) {
-  //hide the loading screen
-  document.querySelector("main").classList.remove("hidden");
-  document.querySelector(".loading-container").classList.add("hidden");
-  document.querySelector(".images").textContent =
-    "If you would change your jpgs to webps, you would save " +
-    (
-      data.lighthouseResult.audits["modern-image-formats"].details.overallSavingsBytes / 1024
-    ).toFixed(2) +
-    "kilobytes";
-  console.log(data);
-}
-
-function getGoogleData() {
-  const url = setUpQuery();
-  fetch(url)
-    .then((response) => response.json())
-    .then((data) => showGoogleData(data));
-}
-
-function setUpQuery() {
-  const api = "https://www.googleapis.com/pagespeedonline/v5/runPagespeed";
-  const parameters = {
-    url: normalizeURL(website),
-    key: google_APIKEY,
-  };
-  let query = `${api}?url=${parameters.url}&key=${parameters.key}`;
-  return query;
 }
