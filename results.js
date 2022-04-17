@@ -146,11 +146,15 @@ function smallDog() {
 
 function displayData() {
   document.querySelector(".website").textContent = "Your website: " + website;
-  document.querySelector(".bytes").textContent = "Your website uses " + kilobytes.toFixed(2) + " kilobytes";
-  document.querySelector(".co2").textContent = "During one page load your website produces " + co2.toFixed(2) + "g of CO2";
-  document.querySelector(".co2year").textContent =
-    "With 10.000 users per month, your website is producing " + (co2 * 120).toFixed(2) + "kg of CO2 per year";
-  document.querySelector("p.co2year").textContent =
+  document.querySelector(".bytes").textContent =
+    "Your website uses " + kilobytes.toFixed(2) + " kilobytes";
+  document.querySelector(".co2").textContent =
+    "During one page load your website produces " + co2.toFixed(2) + "g of CO2";
+  document.querySelector("span.co2year").textContent =
+    // "With 10.000 users per month, your website is producing " +
+    (co2 * 120).toFixed(2);
+    // "kg of CO2 per year";
+  document.querySelector(".flight p").textContent =
     "The same weight of CO2 as " + flightCalc() + " flights from Copenhagen to London";
 
   document.querySelector(".bike p").textContent =
@@ -164,22 +168,29 @@ function displayData() {
     (((bikeCalc() / 0.11) * 15) / 40000).toFixed(2) +
     " times the distance all the way around the equator";
 
-  document.querySelector(".bigDog p").textContent = "The same weight as " + bigDog() + " German Shephards";
-  document.querySelector(".smallDog p").textContent = "The same weight as " + smallDog() + " Chihuahuas";
+  document.querySelector(".bigDog p").textContent =
+    "The same weight as " + bigDog() + " German Shephards";
+  document.querySelector(".smallDog p").textContent =
+    "The same weight as " + smallDog() + " Chihuahuas";
 }
 
 function showGoogleData(data) {
   document.querySelector("main").classList.remove("hidden");
   document.querySelector(".loading-container").classList.add("hidden");
-  webPSavings = data.lighthouseResult.audits["modern-image-formats"].details.overallSavingsBytes / 1024;
+  webPSavings =
+    data.lighthouseResult.audits["modern-image-formats"].details.overallSavingsBytes / 1024;
   unusedCodeSavings =
     data.lighthouseResult.audits["unused-css-rules"].details.overallSavingsBytes / 1024 +
     data.lighthouseResult.audits["unused-javascript"].details.overallSavingsBytes / 1024;
 
   document.querySelector(".images").textContent =
-    "If you would change your jpgs to webps, you would save " + webPSavings.toFixed(2) + "kilobytes";
+    "If you would change your jpgs to webps, you would save " +
+    webPSavings.toFixed(2) +
+    "kilobytes";
   document.querySelector(".unused").textContent =
-    "If you would delete unused CSS rules and JavaScript, you would save " + unusedCodeSavings.toFixed(2) + " kilobytes";
+    "If you would delete unused CSS rules and JavaScript, you would save " +
+    unusedCodeSavings.toFixed(2) +
+    " kilobytes";
   webpCheckboxCheck();
   unusedCodeCheck();
   console.log(data);

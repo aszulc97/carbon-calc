@@ -9,8 +9,22 @@
   <body class="results">
     <!-- loading -->
     <div class="loading-container hidden">
-      <svg class="loading" width="65px" height="65px" viewBox="0 0 66 66" xmlns="http://www.w3.org/2000/svg">
-        <circle class="path" fill="none" stroke-width="6" stroke-linecap="round" cx="33" cy="33" r="30"></circle>
+      <svg
+        class="loading"
+        width="65px"
+        height="65px"
+        viewBox="0 0 66 66"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <circle
+          class="path"
+          fill="none"
+          stroke-width="6"
+          stroke-linecap="round"
+          cx="33"
+          cy="33"
+          r="30"
+        ></circle>
       </svg>
     </div>
     <!-- results -->
@@ -21,12 +35,20 @@
       <h3 class="co2"></h3>
       <h3 class="comparison"></h3>
       <h3 class="unused"></h3>
-      <label for="host">Change host to green</label>
-      <input type="checkbox" name="host" id="host" />
-      <label for="webp">Change images to WebP</label>
-      <input type="checkbox" name="webp" id="webp" />
-      <label for="unused">Delete unused CSS and JavaScript</label>
-      <input type="checkbox" name="unused" id="unused" />
+      <form>
+        <div>
+          <input type="checkbox" name="host" id="host" />
+          <label for="host">Change host to green</label>
+        </div>
+        <div>
+          <input type="checkbox" name="webp" id="webp" />
+          <label for="webp">Change images to WebP</label>
+        </div>
+        <div>
+          <input type="checkbox" name="unused" id="unused" />
+          <label for="unused">Delete unused CSS and JavaScript</label>
+        </div>
+      </form>
       <!-- <h3 class="co2year"></h3> -->
       <aside>
         <div class="images-graphics">
@@ -35,16 +57,21 @@
         </div>
         <p class="images"></p>
       </aside>
-
+      <!-- <h3 class="co2year">CO2 flight equivalent</h3> -->
+      <h4 class="co2year">
+        10.000 users <br />
+        every month a year <br />
+        ... your website is producing <span class="co2year"></span>kg of CO2 per year!!!
+      </h4>
       <ul>
-        <li>
-          <h3 class="co2year">CO2 flight equivalent</h3>
+        <li class="flight">
+          <h3>CO2 flight equivalent</h3>
           <svg width="100px" height="100px" viewBox="0 0 24 24">
             <path
               d="M22 16.21v-1.895L14 8V4a2 2 0 0 0-4 0v4.105L2 14.42v1.789l8-2.81V18l-3 2v2l5-2 5 2v-2l-3-2v-4.685l8 2.895z"
             />
           </svg>
-          <p class="co2year"></p>
+          <p></p>
         </li>
         <li class="bike">
           <h3>CO2 energy equivalent</h3>
