@@ -240,12 +240,12 @@ function get() {
 
 function checkForDbDuplicates(data) {
   let url = normalizeURL(website);
-  compareWithinIndustry(url);
   if (data.some((e) => e.URL === url)) {
     console.log("url already in the database");
   } else {
     post(currentWebsiteData, url);
   }
+  compareWithinIndustry(url);
 }
 
 function post(data, url) {
@@ -255,7 +255,7 @@ function post(data, url) {
     co2: co2,
     greenhost: data.green,
     industry: industry,
-    points: co2.toFixed(2), //used to compare within industry
+    points: Number(co2.toFixed(2)), //used to compare within industry
   };
 
   if (data.green === "unknown") {
@@ -272,9 +272,12 @@ function post(data, url) {
       "x-apikey": db_APIKEY,
     },
     body: postData,
-  }).then((res) => res.json());
+  }).then((res) => res.json())
+  .then((data) => {
+    get();
+  });
 
-  console.log("posted");
+  
 }
 
 function normalizeURL(url) {
