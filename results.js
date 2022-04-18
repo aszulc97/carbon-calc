@@ -41,7 +41,7 @@ function fetchCarbonApiData() {
   // document.querySelector("main").classList.add("hidden");
   document.querySelector(".loading-container").classList.remove("hidden");
   
-  let webCarbonJson = "./public/"+jsonFilenameBase + ".json";
+  let webCarbonJson = "./"+jsonFilenameBase + ".json";
   fetch(webCarbonJson)
     .then((res) => res.json())
     .then((data) => {
@@ -205,7 +205,7 @@ function showGoogleData(data) {
 function fetchGoogleApiData() {
   //const url = setUpQuery();
 
-  let googleJson = "./public/g_"+jsonFilenameBase + ".json";
+  let googleJson = "./g_"+jsonFilenameBase + ".json";
   fetch(googleJson)
     .then((response) => response.json())
     .then((data) => showGoogleData(data));
