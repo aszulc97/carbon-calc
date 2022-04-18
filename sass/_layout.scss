@@ -126,13 +126,6 @@ article {
     padding: 0;
     background: linear-gradient(
       225deg,
-      rgba(23, 24, 35, 1) 8%,
-      rgba(43, 45, 66, 1) 32%,
-      rgba(59, 63, 103, 1) 60%,
-      rgba(91, 185, 198, 1) 100%
-    );
-    background: linear-gradient(
-      225deg,
       rgba(23, 24, 35, 1) 0%,
       rgba(43, 45, 66, 1) 15%,
       rgba(59, 63, 103, 1) 58%,
@@ -144,26 +137,13 @@ article {
     gap: 5rem;
     .left_item {
       background-color: base.$primary-color;
+      max-width: 30vw;
       h2 {
         padding: 0;
         padding-bottom: 1rem;
       }
     }
-    // .right_item {
-    //   background: linear-gradient(
-    //     45deg,
-    //     rgba(43, 45, 66, 1) 16%,
-    //     rgba(59, 63, 103, 1) 59%,
-    //     rgba(146, 220, 229, 1) 100%
-    //   );
-    //   background: linear-gradient(
-    //     45deg,
-    //     rgba(23, 24, 35, 1) 8%,
-    //     rgba(43, 45, 66, 1) 32%,
-    //     rgba(59, 63, 103, 1) 60%,
-    //     rgba(91, 185, 198, 1) 100%
-    //   );
-    // }
+
   }
   section {
     padding: 2rem;
@@ -179,35 +159,16 @@ article {
   .co2 {
     background-color: base.$primary-color;
     padding: 1rem;
+    margin: 6rem 0;
+    width: fit-content;
   }
   .comparison {
     font-size: 1.5em;
     margin: 4rem 0;
+    max-width: 1300px;
   }
 
-  // .data_results {
-  //   display: grid;
-  //   grid-template-columns: 1fr 1fr 1fr;
-  //   gap: 2rem;
-  //   margin: 5rem 0;
-  //   font-size: 1.5em;
-  // }
-
-  // .comparison {
-  //   grid-row: 2/3;
-  //   grid-column: 2/3;
-  //   background-color: lighten(base.$primary-color, 10%);
-  //   padding: 1.5rem;
-  //   border-radius: 5px;
-  // }
-  // .unused {
-  //   grid-row: 3/3;
-  //   grid-column: 3/-1;
-  //   background-color: lighten(base.$primary-color, 15%);
-  //   padding: 1.5rem;
-  //   border-radius: 5px;
-  // }
-  form {
+   form {
     background-color: initial;
     display: flex;
     flex-direction: column;
@@ -236,27 +197,20 @@ article {
       border: 2px solid;
       transform: scale(2);
     }
-    // input:checked + label {
-    //   font-weight: 600;
-    // }
-    // input:nth-child(2):checked ~ .itemRight {
-    //   background-color: base.$secondary-color;
-    //   color: base.$primary-color;
-    //   transition: 1s;
-    // }
   }
 
   .co2year {
     color: base.$secondary-color;
     font-size: 2em;
     font-weight: 800;
-    margin-top: 5rem;
+    max-width: 1300px;
   }
   span.co2,
   span.co2year {
     transition: 1s;
     font-size: 1em;
     color: hotpink;
+    padding: 0;
   }
   path {
     fill: white;
@@ -266,7 +220,7 @@ article {
     grid-template-columns: 1fr 1fr;
     gap: 1rem;
     margin-top: 2rem;
-    max-width: 1500px;
+    max-width: 1300px;
   }
   li {
     list-style: none;
