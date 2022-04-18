@@ -1,0 +1,21 @@
+{
+  "url": "https://studyindenmark.dk/",
+  "green": "unknown",
+  "bytes": 4514663,
+  "cleanerThan": 0.16,
+  "statistics": {
+    "adjustedBytes": 3408570.565,
+    "energy": 0.005729934079409577,
+    "co2": {
+      "grid": {
+        "grams": 2.721718687719549,
+        "litres": 1.5138199341096132
+      },
+      "renewable": {
+        "grams": 2.466660527661248,
+        "litres": 1.3719565854851863
+      }
+    }
+  },
+  "timestamp": 1650275619
+}

@@ -1,11 +1,12 @@
-import { google_APIKEY, db_APIKEY } from "./config.js";
+//import { google_APIKEY, db_APIKEY } from "./config.js";
 import "./sass/style.scss";
 import ord from "ord";
 
+const db_APIKEY = "624ea14b67937c128d7c95bb";
 const urlParams = new URLSearchParams(window.location.search);
 const website = urlParams.get("url");
 const industry = urlParams.get("industry");
-const webCarbonURL = "https://kea-alt-del.dk/websitecarbon/site/?url=";
+//const webCarbonURL = "https://kea-alt-del.dk/websitecarbon/site/?url=";
 const dbURL = "https://serialkillers-7bdb.restdb.io/rest/carboncalc";
 
 //bytes to co2 ratio from web carbon api
@@ -16,6 +17,7 @@ const energyConstant = 0.755 * 0.000000001681037247;
 //to store database/api data
 let dbData;
 let currentWebsiteData;
+let jsonFilenameBase;
 
 let webPSavings;
 let unusedCodeSavings;
@@ -27,6 +29,8 @@ let energy;
 window.addEventListener("DOMContentLoaded", start);
 
 function start() {
+  jsonFilenameBase = normalizeURL(website).substring(7);
+  jsonFilenameBase = jsonFilenameBase.replace(".","_");
   fetchCarbonApiData();
   fetchGoogleApiData();
   get(); //get data from db, check for duplicates and post
@@ -36,7 +40,9 @@ function fetchCarbonApiData() {
   //start loading screen
   // document.querySelector("main").classList.add("hidden");
   document.querySelector(".loading-container").classList.remove("hidden");
-  fetch(webCarbonURL + website)
+  
+  let webCarbonJson = "./json/"+jsonFilenameBase + ".json";
+  fetch(webCarbonJson)
     .then((res) => res.json())
     .then((data) => {
       currentWebsiteData = data;
@@ -172,8 +178,11 @@ function displayData() {
 }
 
 function showGoogleData(data) {
-  document.querySelector("main").classList.remove("hidden");
-  document.querySelector(".loading-container").classList.add("hidden");
+  setTimeout(() => {
+    document.querySelector("main").classList.remove("hidden");
+    document.querySelector(".loading-container").classList.add("hidden");
+  }, 1000);
+
   webPSavings =
     data.lighthouseResult.audits["modern-image-formats"].details.overallSavingsBytes / 1024;
   unusedCodeSavings =
@@ -194,21 +203,23 @@ function showGoogleData(data) {
 }
 
 function fetchGoogleApiData() {
-  const url = setUpQuery();
-  fetch(url)
+  //const url = setUpQuery();
+
+  let googleJson = "./json/g_"+jsonFilenameBase + ".json";
+  fetch(googleJson)
     .then((response) => response.json())
     .then((data) => showGoogleData(data));
 }
 
-function setUpQuery() {
-  const api = "https://www.googleapis.com/pagespeedonline/v5/runPagespeed";
-  const parameters = {
-    url: normalizeURL(website),
-    key: google_APIKEY,
-  };
-  let query = `${api}?url=${parameters.url}&key=${parameters.key}`;
-  return query;
-}
+// function setUpQuery() {
+//   const api = "https://www.googleapis.com/pagespeedonline/v5/runPagespeed";
+//   const parameters = {
+//     url: normalizeURL(website),
+//     key: google_APIKEY,
+//   };
+//   let query = `${api}?url=${parameters.url}&key=${parameters.key}`;
+//   return query;
+// }
 
 //all database operations
 function get() {
@@ -226,12 +237,12 @@ function get() {
 
 function checkForDbDuplicates(data) {
   let url = normalizeURL(website);
-  compareWithinIndustry(url);
   if (data.some((e) => e.URL === url)) {
     console.log("url already in the database");
   } else {
     post(currentWebsiteData, url);
   }
+  compareWithinIndustry(url);
 }
 
 function post(data, url) {
@@ -241,7 +252,7 @@ function post(data, url) {
     co2: co2,
     greenhost: data.green,
     industry: industry,
-    points: co2.toFixed(2), //used to compare within industry
+    points: Number(co2.toFixed(2)), //used to compare within industry
   };
 
   if (data.green === "unknown") {
@@ -258,9 +269,12 @@ function post(data, url) {
       "x-apikey": db_APIKEY,
     },
     body: postData,
-  }).then((res) => res.json());
+  }).then((res) => res.json())
+  .then((data) => {
+    get();
+  });
 
-  console.log("posted");
+  
 }
 
 function normalizeURL(url) {

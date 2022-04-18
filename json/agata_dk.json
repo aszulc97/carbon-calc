@@ -1,0 +1,21 @@
+{
+  "url": "https://agata.dk/",
+  "green": "unknown",
+  "bytes": 94280,
+  "cleanerThan": 0.94,
+  "statistics": {
+    "adjustedBytes": 71181.4,
+    "energy": 0.00011965858470648525,
+    "co2": {
+      "grid": {
+        "grams": 0.05683782773558049,
+        "litres": 0.03161319978652987
+      },
+      "renewable": {
+        "grams": 0.051511431650136996,
+        "litres": 0.0286506582838062
+      }
+    }
+  },
+  "timestamp": 1650275594
+}

@@ -1,0 +1,21 @@
+{
+  "url": "https://silfenstudio.com/",
+  "green": "unknown",
+  "bytes": 3391003,
+  "cleanerThan": 0.23,
+  "statistics": {
+    "adjustedBytes": 2560207.265,
+    "energy": 0.00430380377296824,
+    "co2": {
+      "grid": {
+        "grams": 2.044306792159914,
+        "litres": 1.1370434377993441
+      },
+      "renewable": {
+        "grams": 1.852730369748722,
+        "litres": 1.0304886316542392
+      }
+    }
+  },
+  "timestamp": 1650275683
+}
