@@ -213,7 +213,6 @@ article {
     color: base.$secondary-color;
     font-size: 2em;
     font-weight: 800;
-    // text-transform: uppercase;
     margin-top: 5rem;
   }
 
@@ -275,7 +274,6 @@ article {
     text-align: center;
   }
   .itemLeft {
-    // box-shadow: 0px 0px 10px;
     inset: -1px 3px 8px 5px #fff;
   }
 
@@ -291,7 +289,6 @@ article {
 // MIN
 @media screen and (min-width: 1600px) {
   body {
-    // background-color: hotpink;
     font-size: 24px;
   }
   article {
@@ -303,7 +300,6 @@ article {
 
 @media screen and (max-width: 1350px) {
   body {
-    // background-color: aqua;
     font-size: 18px;
   }
   form {
@@ -344,7 +340,6 @@ article {
 }
 @media screen and (max-width: 1000px) {
   body {
-    // background-color: plum;
     font-size: 14px;
   }
   .results {
@@ -375,9 +370,8 @@ article {
 }
 @media screen and (max-width: 600px) {
   body {
-    // background-color: blue;
     font-size: 14px;
-    // padding: 1rem;
+    padding: 0;
   }
 
   form {
