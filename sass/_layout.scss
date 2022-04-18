@@ -144,6 +144,7 @@ article {
     gap: 5rem;
     .left_item {
       background-color: base.$primary-color;
+      max-width: 30vw;
       h2 {
         padding: 0;
         padding-bottom: 1rem;
@@ -179,10 +180,13 @@ article {
   .co2 {
     background-color: base.$primary-color;
     padding: 1rem;
+    margin: 6rem 0;
+    width: fit-content;
   }
   .comparison {
     font-size: 1.5em;
     margin: 4rem 0;
+    max-width: 1300px;
   }
 
   // .data_results {
@@ -250,13 +254,14 @@ article {
     color: base.$secondary-color;
     font-size: 2em;
     font-weight: 800;
-    margin-top: 5rem;
+    max-width: 1300px;
   }
   span.co2,
   span.co2year {
     transition: 1s;
     font-size: 1em;
     color: hotpink;
+    padding: 0;
   }
   path {
     fill: white;
@@ -266,7 +271,7 @@ article {
     grid-template-columns: 1fr 1fr;
     gap: 1rem;
     margin-top: 2rem;
-    max-width: 1500px;
+    max-width: 1300px;
   }
   li {
     list-style: none;
