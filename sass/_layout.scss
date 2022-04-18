@@ -121,61 +121,75 @@ article {
 
 .results {
   color: base.$accent-color;
+  main {
+    padding: 0;
+    display: flex;
+    gap: 5rem;
+    .left_item {
+      background-color: darken(base.$primary-color, 10%);
+    }
+  }
+section{
+  padding: 2rem;
+}
   .website {
     font-size: 2em;
     margin-bottom: 5rem;
   }
-  .bytes {
-    font-size: 5em;
-    width: 70%;
-    margin: 0 auto;
-  }
-  .data_results {
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
-    gap: 2rem;
-    margin: 5rem 0;
-    font-size: 1.5em;
-  }
-  .co2 {
-    background-color: lighten(base.$primary-color, 5%);
-    padding: 1.5rem;
-    border-radius: 5px;
-  }
-  .comparison {
-    grid-row: 2/3;
-    grid-column: 2/3;
-    background-color: lighten(base.$primary-color, 10%);
-    padding: 1.5rem;
-    border-radius: 5px;
-  }
-  .unused {
-    grid-row: 3/3;
-    grid-column: 3/-1;
-    background-color: lighten(base.$primary-color, 15%);
-    padding: 1.5rem;
-    border-radius: 5px;
-  }
+
+  // .data_results {
+  //   display: grid;
+  //   grid-template-columns: 1fr 1fr 1fr;
+  //   gap: 2rem;
+  //   margin: 5rem 0;
+  //   font-size: 1.5em;
+  // }
+
+  // .comparison {
+  //   grid-row: 2/3;
+  //   grid-column: 2/3;
+  //   background-color: lighten(base.$primary-color, 10%);
+  //   padding: 1.5rem;
+  //   border-radius: 5px;
+  // }
+  // .unused {
+  //   grid-row: 3/3;
+  //   grid-column: 3/-1;
+  //   background-color: lighten(base.$primary-color, 15%);
+  //   padding: 1.5rem;
+  //   border-radius: 5px;
+  // }
   form {
+    background-color: initial;
     display: flex;
     flex-direction: column;
     align-items: flex-start;
     justify-content: center;
     gap: 2rem;
     margin: 5rem auto 0 auto;
-    div {
+    .flex-r {
       display: flex;
       align-items: center;
       gap: 1rem;
       font-size: 1.5rem;
     }
+    .flex-c {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+      font-size: 1.5rem;
+    }
+    label {
+      color: base.$secondary-color;
+      font-weight: 600;
+    }
     input {
       border: 2px solid;
       transform: scale(2);
     }
-    input:checked + label {
-      font-weight: 600;
-    }
+    // input:checked + label {
+    //   font-weight: 600;
+    // }
     // input:nth-child(2):checked ~ .itemRight {
     //   background-color: base.$secondary-color;
     //   color: base.$primary-color;
@@ -188,13 +202,11 @@ article {
     font-size: 2em;
     font-weight: 800;
     text-transform: uppercase;
-margin-top: 5rem;
+    margin-top: 5rem;
   }
 
   span.co2year {
     transition: 1s;
-    color: white;
-    font-weight: 100;
   }
   path {
     fill: white;
