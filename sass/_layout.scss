@@ -20,7 +20,8 @@ h2 {
   color: base.$secondary-color;
   font-weight: 300;
   grid-column: 1/-1;
-  padding: 2rem 0;
+  margin: 2rem 0;
+  border-radius: 5px;
 }
 
 h3,
@@ -123,17 +124,46 @@ article {
   color: base.$accent-color;
   main {
     padding: 0;
+    background: linear-gradient(
+      225deg,
+      rgba(23, 24, 35, 1) 8%,
+      rgba(43, 45, 66, 1) 32%,
+      rgba(59, 63, 103, 1) 60%,
+      rgba(91, 185, 198, 1) 100%
+    );
+    background: linear-gradient(
+      225deg,
+      rgba(23, 24, 35, 1) 0%,
+      rgba(43, 45, 66, 1) 15%,
+      rgba(59, 63, 103, 1) 58%,
+      rgba(91, 185, 198, 1) 100%
+    );
   }
   .layout {
     display: flex;
     gap: 5rem;
     .left_item {
-      background-color: darken(base.$primary-color, 10%);
+      background-color: base.$primary-color;
       h2 {
         padding: 0;
         padding-bottom: 1rem;
       }
     }
+    // .right_item {
+    //   background: linear-gradient(
+    //     45deg,
+    //     rgba(43, 45, 66, 1) 16%,
+    //     rgba(59, 63, 103, 1) 59%,
+    //     rgba(146, 220, 229, 1) 100%
+    //   );
+    //   background: linear-gradient(
+    //     45deg,
+    //     rgba(23, 24, 35, 1) 8%,
+    //     rgba(43, 45, 66, 1) 32%,
+    //     rgba(59, 63, 103, 1) 60%,
+    //     rgba(91, 185, 198, 1) 100%
+    //   );
+    // }
   }
   section {
     padding: 2rem;
@@ -143,10 +173,16 @@ article {
     margin-bottom: 5rem;
   }
 
-  .bytes,
+  .bytes {
+    font-size: 1.5em;
+  }
+  .co2 {
+    background-color: base.$primary-color;
+    padding: 1rem;
+  }
   .comparison {
-    font-size: 1.3em;
-    margin-top: 0.6rem;
+    font-size: 1.5em;
+    margin: 4rem 0;
   }
 
   // .data_results {
@@ -215,10 +251,11 @@ article {
     font-weight: 800;
     margin-top: 5rem;
   }
-
+  span.co2,
   span.co2year {
     transition: 1s;
     font-size: 1em;
+    color: hotpink;
   }
   path {
     fill: white;
@@ -226,18 +263,20 @@ article {
   ul {
     display: grid;
     grid-template-columns: 1fr 1fr;
+    gap: 1rem;
     margin-top: 2rem;
     max-width: 1500px;
   }
   li {
     list-style: none;
-    border: 4px solid base.$secondary-color;
+    background-color: base.$primary-color;
     display: flex;
     flex-wrap: wrap;
     align-items: center;
     justify-content: center;
     gap: 2rem;
     padding: 2rem;
+    border-radius: 5px;
     h3 {
       color: base.$secondary-color;
       font-size: 1.5em;
@@ -312,7 +351,7 @@ article {
     .layout {
       gap: 1rem;
     }
-        .website {
+    .website {
       margin-bottom: 2rem;
     }
   }
@@ -323,12 +362,10 @@ article {
 }
 @media screen and (max-width: 1130px) {
   .results {
-
     section {
       padding: 1rem;
     }
     form {
-
       input {
         transform: scale(1.5);
       }

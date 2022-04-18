@@ -30,7 +30,7 @@ window.addEventListener("DOMContentLoaded", start);
 
 function start() {
   jsonFilenameBase = normalizeURL(website).substring(7);
-  jsonFilenameBase = jsonFilenameBase.replace(".","_");
+  jsonFilenameBase = jsonFilenameBase.replace(".", "_");
   fetchCarbonApiData();
   fetchGoogleApiData();
   get(); //get data from db, check for duplicates and post
@@ -40,8 +40,8 @@ function fetchCarbonApiData() {
   //start loading screen
   // document.querySelector("main").classList.add("hidden");
   document.querySelector(".loading-container").classList.remove("hidden");
-  
-  let webCarbonJson = "./"+jsonFilenameBase + ".json";
+
+  let webCarbonJson = "./" + jsonFilenameBase + ".json";
   fetch(webCarbonJson)
     .then((res) => res.json())
     .then((data) => {
@@ -151,12 +151,10 @@ function smallDog() {
 }
 
 function displayData() {
-  document.querySelector(".website").textContent = "Your website: " + website;
-  document.querySelector(".bytes").textContent =
-    "Your website uses " + kilobytes.toFixed(2) + " kilobytes";
-  document.querySelector(".co2").textContent =
-    "During one page load your website produces " + co2.toFixed(2) + "g of CO2";
-  document.querySelector("span.co2year").textContent = (co2 * 120).toFixed(2);
+  document.querySelector(".website").textContent = website;
+  document.querySelector(".bytes").textContent = "uses " + kilobytes.toFixed(2) + " kilobytes";
+  document.querySelector("span.co2").textContent = co2.toFixed(2) + "g";
+  document.querySelector("span.co2year").textContent = (co2 * 120).toFixed(2) + "kg";
   document.querySelector(".flight p").textContent =
     "The same weight of CO2 as " + flightCalc() + " flights from Copenhagen to London";
 
@@ -205,7 +203,7 @@ function showGoogleData(data) {
 function fetchGoogleApiData() {
   //const url = setUpQuery();
 
-  let googleJson = "./g_"+jsonFilenameBase + ".json";
+  let googleJson = "./g_" + jsonFilenameBase + ".json";
   fetch(googleJson)
     .then((response) => response.json())
     .then((data) => showGoogleData(data));
@@ -269,12 +267,11 @@ function post(data, url) {
       "x-apikey": db_APIKEY,
     },
     body: postData,
-  }).then((res) => res.json())
-  .then((data) => {
-    get();
-  });
-
-  
+  })
+    .then((res) => res.json())
+    .then((data) => {
+      get();
+    });
 }
 
 function normalizeURL(url) {
