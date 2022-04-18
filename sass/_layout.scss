@@ -42,10 +42,6 @@ label {
     background-color: lighten(base.$secondary-color, 5%);
     border-radius: 2px;
   }
-  select:valid:not(:focus),
-  input:valid:not(:focus) {
-    border: 2px solid #039f03;
-  }
 
   div:focus-within input {
     background-color: lighten(base.$primary-color, 10%);
