@@ -123,13 +123,39 @@ article {
   color: base.$accent-color;
   .website {
     font-size: 2em;
+    margin-bottom: 5rem;
   }
   .bytes {
     font-size: 5em;
     width: 70%;
     margin: 0 auto;
   }
-
+  .data_results {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 2rem;
+    margin: 5rem 0;
+    font-size: 1.5em;
+  }
+  .co2 {
+    background-color: lighten(base.$primary-color, 5%);
+    padding: 1.5rem;
+    border-radius: 5px;
+  }
+  .comparison {
+    grid-row: 2/3;
+    grid-column: 2/3;
+    background-color: lighten(base.$primary-color, 10%);
+    padding: 1.5rem;
+    border-radius: 5px;
+  }
+  .unused {
+    grid-row: 3/3;
+    grid-column: 3/-1;
+    background-color: lighten(base.$primary-color, 15%);
+    padding: 1.5rem;
+    border-radius: 5px;
+  }
   form {
     display: flex;
     flex-direction: column;
@@ -157,14 +183,18 @@ article {
     // }
   }
 
-  .co2 {
-    font-size: 2em;
-    font-weight: 100;
-  }
-
   .co2year {
     color: base.$secondary-color;
     font-size: 2em;
+    font-weight: 800;
+    text-transform: uppercase;
+margin-top: 5rem;
+  }
+
+  span.co2year {
+    transition: 1s;
+    color: white;
+    font-weight: 100;
   }
   path {
     fill: white;

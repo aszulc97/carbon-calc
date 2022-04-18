@@ -150,10 +150,7 @@ function displayData() {
     "Your website uses " + kilobytes.toFixed(2) + " kilobytes";
   document.querySelector(".co2").textContent =
     "During one page load your website produces " + co2.toFixed(2) + "g of CO2";
-  document.querySelector("span.co2year").textContent =
-    // "With 10.000 users per month, your website is producing " +
-    (co2 * 120).toFixed(2);
-    // "kg of CO2 per year";
+  document.querySelector("span.co2year").textContent = (co2 * 120).toFixed(2);
   document.querySelector(".flight p").textContent =
     "The same weight of CO2 as " + flightCalc() + " flights from Copenhagen to London";
 
