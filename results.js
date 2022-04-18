@@ -5,7 +5,7 @@ import ord from "ord";
 const urlParams = new URLSearchParams(window.location.search);
 const website = urlParams.get("url");
 const industry = urlParams.get("industry");
-const webCarbonURL = "https://kea-alt-del.dk/websitecarbon/site/?url=";
+//const webCarbonURL = "https://kea-alt-del.dk/websitecarbon/site/?url=";
 const dbURL = "https://serialkillers-7bdb.restdb.io/rest/carboncalc";
 
 //bytes to co2 ratio from web carbon api
@@ -16,6 +16,7 @@ const energyConstant = 0.755 * 0.000000001681037247;
 //to store database/api data
 let dbData;
 let currentWebsiteData;
+let jsonFilenameBase;
 
 let webPSavings;
 let unusedCodeSavings;
@@ -27,16 +28,23 @@ let energy;
 window.addEventListener("DOMContentLoaded", start);
 
 function start() {
+  jsonFilenameBase = normalizeURL(website).substring(7);
+  jsonFilenameBase = jsonFilenameBase.replace(".","_");
   fetchCarbonApiData();
   fetchGoogleApiData();
   get(); //get data from db, check for duplicates and post
+
 }
+
+
 
 function fetchCarbonApiData() {
   //start loading screen
   // document.querySelector("main").classList.add("hidden");
   document.querySelector(".loading-container").classList.remove("hidden");
-  fetch(webCarbonURL + website)
+  
+  let webCarbonJson = "./json/"+jsonFilenameBase + ".json";
+  fetch(webCarbonJson)
     .then((res) => res.json())
     .then((data) => {
       currentWebsiteData = data;
