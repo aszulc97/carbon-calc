@@ -30,9 +30,28 @@ label {
 .container {
   display: grid;
   grid-template-columns: 2fr 1fr;
-  //   gap: 5em;
   align-items: center;
   justify-items: center;
+
+  input,
+  input:focus {
+    all: unset;
+    font-size: 1em;
+    border-bottom: 2px solid base.$primary-color;
+    padding: 0.5rem;
+    background-color: lighten(base.$secondary-color, 5%);
+    border-radius: 2px;
+  }
+  select:valid:not(:focus),
+  input:valid:not(:focus) {
+    border: 2px solid #039f03;
+  }
+
+  div:focus-within input {
+    background-color: lighten(base.$primary-color, 10%);
+    color: base.$accent-color;
+    border-radius: 2px;
+  }
 }
 form * {
   display: block;
@@ -68,11 +87,6 @@ form {
     color: base.$primary-color;
   }
 
-  // input,
-  // input:focus,
-  // input:-webkit-autofill,
-  // https://developer.mozilla.org/en-US/docs/Web/CSS/:autofill
-  // ASK DANNIE
   select {
     all: unset;
     font-size: 1em;
@@ -84,12 +98,6 @@ form {
 
   option {
     font-size: 1.2rem;
-  }
-
-  div:focus-within input {
-    background-color: lighten(base.$primary-color, 10%);
-    color: base.$accent-color;
-    border-radius: 2px;
   }
 
   select:focus {
