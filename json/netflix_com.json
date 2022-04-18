@@ -1,0 +1,21 @@
+{
+  "url": "https://www.netflix.com/fr-en/",
+  "green": true,
+  "bytes": 1990611,
+  "cleanerThan": 0.44,
+  "statistics": {
+    "adjustedBytes": 1502911.305,
+    "energy": 0.002526449882914312,
+    "co2": {
+      "grid": {
+        "grams": 1.2000636943842982,
+        "litres": 0.6674754268165467
+      },
+      "renewable": {
+        "grams": 1.0876031233401662,
+        "litres": 0.6049248572018004
+      }
+    }
+  },
+  "timestamp": 1650275606
+}

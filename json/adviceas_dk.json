@@ -1,0 +1,21 @@
+{
+  "url": "https://adviceas.dk/",
+  "green": "unknown",
+  "bytes": 1854719,
+  "cleanerThan": 0.43,
+  "statistics": {
+    "adjustedBytes": 1400312.845,
+    "energy": 0.0023539780501509082,
+    "co2": {
+      "grid": {
+        "grams": 1.1181395738216815,
+        "litres": 0.6219092309596193
+      },
+      "renewable": {
+        "grams": 1.0133562897614599,
+        "litres": 0.563628768365324
+      }
+    }
+  },
+  "timestamp": 1650275604
+}
