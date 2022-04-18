@@ -8,6 +8,7 @@ module.exports = defineConfig({
         main: resolve(__dirname, "index.html"),
         nested: resolve(__dirname, "results.html"),
       },
+      publicDir: 'json'   
     },
   },
 });
