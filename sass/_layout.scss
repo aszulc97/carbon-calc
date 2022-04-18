@@ -121,7 +121,7 @@ article {
 
 .results {
   color: base.$accent-color;
-  main {
+  .layout {
     padding: 0;
     display: flex;
     gap: 5rem;
@@ -131,6 +131,9 @@ article {
   }
   section {
     padding: 2rem;
+    p{
+      font-size: 1.3em;
+    }
   }
   .website {
     font-size: 2em;
