@@ -129,9 +129,9 @@ article {
       background-color: darken(base.$primary-color, 10%);
     }
   }
-section{
-  padding: 2rem;
-}
+  section {
+    padding: 2rem;
+  }
   .website {
     font-size: 2em;
     margin-bottom: 5rem;
@@ -201,24 +201,26 @@ section{
     color: base.$secondary-color;
     font-size: 2em;
     font-weight: 800;
-    text-transform: uppercase;
+    // text-transform: uppercase;
     margin-top: 5rem;
   }
 
   span.co2year {
     transition: 1s;
+    font-size: 1em;
   }
   path {
     fill: white;
   }
   ul {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(500px, 1fr));
+    grid-template-columns: 1fr 1fr;
     margin-top: 2rem;
+    max-width: 1500px;
   }
   li {
     list-style: none;
-    border: 5px solid aqua;
+    border: 4px solid base.$secondary-color;
     display: flex;
     flex-wrap: wrap;
     align-items: center;
@@ -227,10 +229,10 @@ section{
     padding: 2rem;
     h3 {
       color: base.$secondary-color;
-      font-size: 2em;
+      font-size: 1.5em;
     }
     p {
-      font-size: 1.3em;
+      font-size: 1em;
     }
   }
   aside {
@@ -305,10 +307,40 @@ section{
     width: 70%;
   }
 }
+@media screen and (max-width: 1130px) {
+  .results {
+    main {
+      gap: 1rem;
+    }
+    section {
+      padding: 1rem;
+    }
+    form {
+      padding: 0.5rem;
+      input {
+        transform: scale(1.5);
+      }
+      label,
+      p {
+        font-size: 0.8em;
+      }
+    }
+  }
+}
 @media screen and (max-width: 1000px) {
   body {
     // background-color: plum;
     font-size: 14px;
+  }
+  .results {
+    li {
+      gap: 1rem;
+      padding: 1rem;
+    }
+    svg {
+      width: 80px;
+      height: 80px;
+    }
   }
 }
 
@@ -316,6 +348,17 @@ section{
   .container {
     grid-template-columns: 1fr;
     gap: 2rem;
+  }
+  .results {
+    main {
+      flex-direction: column;
+    }
+    form {
+      margin-top: 1rem;
+    }
+    .website {
+      margin-bottom: 0;
+    }
   }
 }
 @media screen and (max-width: 600px) {
@@ -340,7 +383,10 @@ section{
       gap: 0.3rem;
       width: 95%;
     }
-    input {
+    div.flex-r {
+      flex-direction: row;
+    }
+    input:not(.flex-r input) {
       width: 100%;
     }
     option {
@@ -351,5 +397,8 @@ section{
   article {
     padding: 2rem;
     width: 100%;
+  }
+  .results ul {
+    grid-template-columns: 1fr;
   }
 }
