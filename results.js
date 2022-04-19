@@ -169,7 +169,7 @@ function displayData() {
     bikeCalc() +
     " kWh of energy. That's enough to bike for " +
     (bikeCalc() / 0.11).toFixed(2) +
-    " hours. \n During this time you can make circa " +
+    " hours. <br>During this time you can make circa " +
     ((bikeCalc() / 0.11) * 15).toFixed(2) +
     " kilometers, which is " +
     (((bikeCalc() / 0.11) * 15) / 40000).toFixed(2) +
