@@ -164,7 +164,7 @@ function displayData() {
   document.querySelector(".flight p").textContent =
     "The same weight of CO2 as " + flightCalc() + " flights from Copenhagen to London";
 
-  document.querySelector(".bike p").textContent =
+  document.querySelector(".bike p").innerHTML =
     "That is " +
     bikeCalc() +
     " kWh of energy. That's enough to bike for " +
