@@ -54,7 +54,9 @@ function fetchCarbonApiData() {
 //greenhost checkbox
 function greenhostCheckboxCheck() {
   if (currentWebsiteData.green === true) {
-    document.querySelector("#host").disabled = true; //todo: make it disappear
+    document.querySelector("#host").classList.add("hidden");
+    document.querySelector("#host").nextElementSibling.classList.add("hidden");
+    document.querySelector(".host").classList.add("hidden");
   } else {
     document.querySelector("#host").addEventListener("change", (e) => changeHost(e.target));
   }
@@ -72,7 +74,9 @@ function changeHost(checkbox) {
 //webp images checkbox
 function webpCheckboxCheck() {
   if (webPSavings == 0) {
-    document.querySelector("#webp").disabled = true; //todo: make it disappear
+    document.querySelector("#webp").classList.add("hidden");
+    document.querySelector("#webp").nextElementSibling.classList.add("hidden");
+    document.querySelector(".images").classList.add("hidden");
   } else {
     document.querySelector("#webp").addEventListener("change", (e) => changeToWebP(e.target));
   }
@@ -93,7 +97,9 @@ function changeToWebP(checkbox) {
 //unused CSS & JS
 function unusedCodeCheck() {
   if (unusedCodeSavings == 0) {
-    document.querySelector("#unused").disabled = true; //todo: make it disappear
+    document.querySelector("#unused").classList.add("hidden");
+    document.querySelector("#unused").nextElementSibling.classList.add("hidden");
+    document.querySelector(".unused").classList.add("hidden");
   } else {
     document.querySelector("#unused").addEventListener("change", (e) => removeUnused(e.target));
   }
