@@ -9,14 +9,28 @@
   <body class="results">
     <!-- loading -->
     <div class="loading-container hidden">
-      <svg class="loading" width="65px" height="65px" viewBox="0 0 66 66" xmlns="http://www.w3.org/2000/svg">
-        <circle class="path" fill="none" stroke-width="6" stroke-linecap="round" cx="33" cy="33" r="30"></circle>
+      <svg
+        class="loading"
+        width="65px"
+        height="65px"
+        viewBox="0 0 66 66"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <circle
+          class="path"
+          fill="none"
+          stroke-width="6"
+          stroke-linecap="round"
+          cx="33"
+          cy="33"
+          r="30"
+        ></circle>
       </svg>
     </div>
     <!-- results -->
     <main class="hidden">
       <div class="layout">
-        <section class="left_item">
+        <!-- <section class="left_item">
           <h2>Make a change!</h2>
           <p>See what happens when you make some changes to your website</p>
           <form>
@@ -42,14 +56,16 @@
               <p class="unused"></p>
             </div>
           </form>
-        </section>
+        </section> -->
         <section class="right_item">
           <h1>Lets see what you got!</h1>
           <div class="flex-r">
             <span class="website"></span>
             <span class="bytes"></span>
           </div>
-          <h2 class="co2">During one page load your website produces <span class="co2"></span> of CO2</h2>
+          <h2 class="co2">
+            During one page load your website produces <span class="co2"></span> of CO2
+          </h2>
           <div class="co2year">
             <p>
               With 10.000 users per month, your website is producing <span class="co2year"></span>
@@ -119,10 +135,43 @@
               <p></p>
             </li>
           </ul>
-          <p class="comparison">We have tested
- <span class="comparison"></span>
- websites within your industry. In order from the cleanest to the dirtiest, your website is  <span class="comparison2"></span></p>
+          <p class="comparison">
+            We have tested
+            <span class="comparison"></span>
+            websites within your industry. In order from the cleanest to the dirtiest, your website
+            is <span class="comparison2"></span>
+          </p>
           <canvas id="myChart" width="400" height="400"></canvas>
+        </section>
+        <section class="left_item">
+          <h2>Make a change!</h2>
+          <p>See what happens when you make some changes to your website</p>
+          <form>
+            <div class="flex-c">
+              <div class="flex-r">
+                <input type="checkbox" name="host" id="host" />
+                <label for="host">Change host to green</label>
+              </div>
+              <p class="host">
+                Changing host to green will decrease the amount of CO2 produced by your website by
+                9%
+              </p>
+            </div>
+            <div class="flex-c">
+              <div class="flex-r">
+                <input type="checkbox" name="webp" id="webp" />
+                <label for="webp">Change images to WebP</label>
+              </div>
+              <p class="images"></p>
+            </div>
+            <div class="flex-c">
+              <div class="flex-r">
+                <input type="checkbox" name="unused" id="unused" />
+                <label for="unused">Delete unused CSS and JavaScript</label>
+              </div>
+              <p class="unused"></p>
+            </div>
+          </form>
         </section>
       </div>
     </main>
