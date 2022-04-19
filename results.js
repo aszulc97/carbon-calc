@@ -1,4 +1,3 @@
-//import { google_APIKEY, db_APIKEY } from "./config.js";
 import "./sass/style.scss";
 import ord from "ord";
 
@@ -6,7 +5,6 @@ const db_APIKEY = "624ea14b67937c128d7c95bb";
 const urlParams = new URLSearchParams(window.location.search);
 const website = urlParams.get("url");
 const industry = urlParams.get("industry");
-//const webCarbonURL = "https://kea-alt-del.dk/websitecarbon/site/?url=";
 const dbURL = "https://serialkillers-7bdb.restdb.io/rest/carboncalc";
 
 //bytes to co2 ratio from web carbon api
@@ -38,7 +36,6 @@ function start() {
 
 function fetchCarbonApiData() {
   //start loading screen
-  // document.querySelector("main").classList.add("hidden");
   document.querySelector(".loading-container").classList.remove("hidden");
 
   let webCarbonJson = "./" + jsonFilenameBase + ".json";
@@ -208,16 +205,6 @@ function fetchGoogleApiData() {
     .then((response) => response.json())
     .then((data) => showGoogleData(data));
 }
-
-// function setUpQuery() {
-//   const api = "https://www.googleapis.com/pagespeedonline/v5/runPagespeed";
-//   const parameters = {
-//     url: normalizeURL(website),
-//     key: google_APIKEY,
-//   };
-//   let query = `${api}?url=${parameters.url}&key=${parameters.key}`;
-//   return query;
-// }
 
 //all database operations
 function get() {
