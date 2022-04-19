@@ -130,12 +130,10 @@ function compareWithinIndustry(url) {
   filtered.sort((a, b) => a.points - b.points);
   console.log("url", url);
   let index = filtered.map((object) => object.URL).indexOf(url) + 1;
-  document.querySelector(".comparison").textContent =
-    "We have tested " +
-    filtered.length +
-    " websites within your industry. In order from the cleanest to the dirtiest, your website is " +
-    index +
-    ord(index);
+  document.querySelector("span.comparison").textContent =
+  
+    filtered.length;
+    document.querySelector(".comparison2").textContent = index + ord(index);
 
   showGraph();
 }
