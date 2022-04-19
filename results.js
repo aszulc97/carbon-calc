@@ -163,14 +163,16 @@ function displayData() {
     bikeCalc() +
     " kWh of energy. That's enough to bike for " +
     (bikeCalc() / 0.11).toFixed(2) +
-    " hours. During this time you can make circa " +
+    " hours. \n During this time you can make circa " +
     ((bikeCalc() / 0.11) * 15).toFixed(2) +
     " kilometers, which is " +
     (((bikeCalc() / 0.11) * 15) / 40000).toFixed(2) +
     " times the distance all the way around the equator";
 
-  document.querySelector(".bigDog p").textContent = "The same weight as " + bigDog() + " German Shephards";
-  document.querySelector(".smallDog p").textContent = "The same weight as " + smallDog() + " Chihuahuas";
+  document.querySelector(".bigDog p").textContent =
+    "The same weight as " + bigDog() + " German Shephards";
+  document.querySelector(".smallDog p").textContent =
+    "The same weight as " + smallDog() + " Chihuahuas";
 }
 
 function showGoogleData(data) {
@@ -179,15 +181,20 @@ function showGoogleData(data) {
     document.querySelector(".loading-container").classList.add("hidden");
   }, 1000);
 
-  webPSavings = data.lighthouseResult.audits["modern-image-formats"].details.overallSavingsBytes / 1024;
+  webPSavings =
+    data.lighthouseResult.audits["modern-image-formats"].details.overallSavingsBytes / 1024;
   unusedCodeSavings =
     data.lighthouseResult.audits["unused-css-rules"].details.overallSavingsBytes / 1024 +
     data.lighthouseResult.audits["unused-javascript"].details.overallSavingsBytes / 1024;
 
   document.querySelector(".images").textContent =
-    "If you would change your jpgs to webps, you would save " + webPSavings.toFixed(2) + "kilobytes";
+    "If you would change your jpgs to webps, you would save " +
+    webPSavings.toFixed(2) +
+    " kilobytes";
   document.querySelector(".unused").textContent =
-    "If you would delete unused CSS rules and JavaScript, you would save " + unusedCodeSavings.toFixed(2) + " kilobytes";
+    "If you would delete unused CSS rules and JavaScript, you would save " +
+    unusedCodeSavings.toFixed(2) +
+    " kilobytes";
   webpCheckboxCheck();
   unusedCodeCheck();
   console.log(data);
