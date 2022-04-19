@@ -62,12 +62,19 @@ function greenhostCheckboxCheck() {
   }
 }
 
+let fadeIn = [{ opacity: 0 }, { opacity: 1 }];
+let fadeOut = [{ opacity: 1 }, { opacity: 0 }];
+
 function changeHost(checkbox) {
+  document.querySelector("span.co2").animate(fadeOut, 1000);
+  document.querySelector("span.co2year").animate(fadeOut, 1000);
   if (checkbox.checked) {
     co2 = co2 * 0.91;
   } else {
     co2 = co2 / 0.91;
   }
+  document.querySelector("span.co2").animate(fadeIn, 1000);
+  document.querySelector("span.co2year").animate(fadeIn, 1000);
   displayData();
 }
 
@@ -83,6 +90,8 @@ function webpCheckboxCheck() {
 }
 
 function changeToWebP(checkbox) {
+  document.querySelector("span.co2").animate(fadeOut, 1000);
+  document.querySelector("span.co2year").animate(fadeOut, 1000);
   if (checkbox.checked) {
     kilobytes = kilobytes - webPSavings;
   } else {
@@ -91,6 +100,8 @@ function changeToWebP(checkbox) {
   co2 = kilobytes * carbonConstant * 1024;
   energy = kilobytes * energyConstant * 1024;
   if (document.querySelector("#host").checked) co2 = co2 * 0.91;
+  document.querySelector("span.co2").animate(fadeIn, 1000);
+  document.querySelector("span.co2year").animate(fadeIn, 1000);
   displayData();
 }
 
@@ -106,6 +117,8 @@ function unusedCodeCheck() {
 }
 
 function removeUnused(checkbox) {
+  document.querySelector("span.co2").animate(fadeOut, 1000);
+  document.querySelector("span.co2year").animate(fadeOut, 1000);
   if (checkbox.checked) {
     kilobytes = kilobytes - unusedCodeSavings;
   } else {
@@ -114,6 +127,8 @@ function removeUnused(checkbox) {
   co2 = kilobytes * carbonConstant * 1024;
   energy = kilobytes * energyConstant * 1024;
   if (document.querySelector("#host").checked) co2 = co2 * 0.91;
+  document.querySelector("span.co2").animate(fadeIn, 1000);
+  document.querySelector("span.co2year").animate(fadeIn, 1000);
   displayData();
 }
 
@@ -175,10 +190,8 @@ function displayData() {
     (((bikeCalc() / 0.11) * 15) / 40000).toFixed(2) +
     " times the distance all the way around the equator";
 
-  document.querySelector(".bigDog p").textContent =
-    "The same weight as " + bigDog() + " German Shephards";
-  document.querySelector(".smallDog p").textContent =
-    "The same weight as " + smallDog() + " Chihuahuas";
+  document.querySelector(".bigDog p").textContent = "The same weight as " + bigDog() + " German Shephards";
+  document.querySelector(".smallDog p").textContent = "The same weight as " + smallDog() + " Chihuahuas";
 }
 
 function showGoogleData(data) {
@@ -187,20 +200,15 @@ function showGoogleData(data) {
     document.querySelector(".loading-container").classList.add("hidden");
   }, 1000);
 
-  webPSavings =
-    data.lighthouseResult.audits["modern-image-formats"].details.overallSavingsBytes / 1024;
+  webPSavings = data.lighthouseResult.audits["modern-image-formats"].details.overallSavingsBytes / 1024;
   unusedCodeSavings =
     data.lighthouseResult.audits["unused-css-rules"].details.overallSavingsBytes / 1024 +
     data.lighthouseResult.audits["unused-javascript"].details.overallSavingsBytes / 1024;
 
   document.querySelector(".images").textContent =
-    "If you would change your jpgs to webps, you would save " +
-    webPSavings.toFixed(2) +
-    " kilobytes";
+    "If you would change your jpgs to webps, you would save " + webPSavings.toFixed(2) + " kilobytes";
   document.querySelector(".unused").textContent =
-    "If you would delete unused CSS rules and JavaScript, you would save " +
-    unusedCodeSavings.toFixed(2) +
-    " kilobytes";
+    "If you would delete unused CSS rules and JavaScript, you would save " + unusedCodeSavings.toFixed(2) + " kilobytes";
   webpCheckboxCheck();
   unusedCodeCheck();
   console.log(data);
