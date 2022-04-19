@@ -143,7 +143,6 @@ article {
         padding-bottom: 1rem;
       }
     }
-
   }
   section {
     padding: 2rem;
@@ -168,7 +167,7 @@ article {
     max-width: 1300px;
   }
 
-   form {
+  form {
     background-color: initial;
     display: flex;
     flex-direction: column;
@@ -358,7 +357,11 @@ article {
   .results {
     .layout {
       flex-direction: column;
+      .left_item {
+        max-width: 100vw;
+      }
     }
+
     form {
       margin-top: 1rem;
     }
