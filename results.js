@@ -1,6 +1,7 @@
 //import { google_APIKEY, db_APIKEY } from "./config.js";
 import "./sass/style.scss";
 import ord from "ord";
+import Chart from "chart.js/auto";
 
 const db_APIKEY = "624ea14b67937c128d7c95bb";
 const urlParams = new URLSearchParams(window.location.search);
@@ -21,6 +22,7 @@ let jsonFilenameBase;
 
 let webPSavings;
 let unusedCodeSavings;
+let filtered;
 
 let kilobytes;
 let co2;
@@ -119,7 +121,7 @@ function setVariables() {
 }
 
 function compareWithinIndustry(url) {
-  let filtered = dbData.filter((record) => {
+  filtered = dbData.filter((record) => {
     return record.industry == industry;
   });
   filtered.sort((a, b) => a.points - b.points);
@@ -131,7 +133,8 @@ function compareWithinIndustry(url) {
     " websites within your industry. In order from the cleanest to the dirtiest, your website is " +
     index +
     ord(index);
-  console.log("after", filtered);
+
+  showGraph();
 }
 
 function flightCalc() {
@@ -169,10 +172,8 @@ function displayData() {
     (((bikeCalc() / 0.11) * 15) / 40000).toFixed(2) +
     " times the distance all the way around the equator";
 
-  document.querySelector(".bigDog p").textContent =
-    "The same weight as " + bigDog() + " German Shephards";
-  document.querySelector(".smallDog p").textContent =
-    "The same weight as " + smallDog() + " Chihuahuas";
+  document.querySelector(".bigDog p").textContent = "The same weight as " + bigDog() + " German Shephards";
+  document.querySelector(".smallDog p").textContent = "The same weight as " + smallDog() + " Chihuahuas";
 }
 
 function showGoogleData(data) {
@@ -181,20 +182,15 @@ function showGoogleData(data) {
     document.querySelector(".loading-container").classList.add("hidden");
   }, 1000);
 
-  webPSavings =
-    data.lighthouseResult.audits["modern-image-formats"].details.overallSavingsBytes / 1024;
+  webPSavings = data.lighthouseResult.audits["modern-image-formats"].details.overallSavingsBytes / 1024;
   unusedCodeSavings =
     data.lighthouseResult.audits["unused-css-rules"].details.overallSavingsBytes / 1024 +
     data.lighthouseResult.audits["unused-javascript"].details.overallSavingsBytes / 1024;
 
   document.querySelector(".images").textContent =
-    "If you would change your jpgs to webps, you would save " +
-    webPSavings.toFixed(2) +
-    "kilobytes";
+    "If you would change your jpgs to webps, you would save " + webPSavings.toFixed(2) + "kilobytes";
   document.querySelector(".unused").textContent =
-    "If you would delete unused CSS rules and JavaScript, you would save " +
-    unusedCodeSavings.toFixed(2) +
-    " kilobytes";
+    "If you would delete unused CSS rules and JavaScript, you would save " + unusedCodeSavings.toFixed(2) + " kilobytes";
   webpCheckboxCheck();
   unusedCodeCheck();
   console.log(data);
@@ -294,4 +290,52 @@ function normalizeURL(url) {
     normalizedURL = normalizedURL.slice(0, -1);
   }
   return normalizedURL;
+}
+
+function showGraph() {
+  let values = filtered.map((a) => a.points);
+  console.log(values);
+
+  const ctx = document.getElementById("myChart").getContext("2d");
+  const myChart = new Chart(ctx, {
+    type: "bar",
+    data: {
+      labels: ["1st", "2nd", "3rd", "4th", "5th"],
+      datasets: [
+        {
+          label: "amount of CO2",
+          data: values,
+          backgroundColor: [
+            "rgba(255, 99, 132, 0.2)",
+            "rgba(54, 162, 235, 0.2)",
+            "rgba(255, 206, 86, 0.2)",
+            "rgba(75, 192, 192, 0.2)",
+            "rgba(153, 102, 255, 0.2)",
+            "rgba(255, 159, 64, 0.2)",
+          ],
+          borderColor: [
+            "rgba(255, 99, 132, 1)",
+            "rgba(54, 162, 235, 1)",
+            "rgba(255, 206, 86, 1)",
+            "rgba(75, 192, 192, 1)",
+            "rgba(153, 102, 255, 1)",
+            "rgba(255, 159, 64, 1)",
+          ],
+          borderWidth: 1,
+        },
+      ],
+    },
+    options: {
+      scales: {
+        x: {
+          ticks: {
+            color: "#92dce5",
+          },
+          y: {
+            beginAtZero: true,
+          },
+        },
+      },
+    },
+  });
 }
