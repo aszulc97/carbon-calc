@@ -160,11 +160,12 @@ article {
     padding: 1rem;
     margin: 6rem 0;
     width: fit-content;
+    max-width: 1100px;
   }
   .comparison {
     font-size: 1.5em;
     margin: 4rem 0;
-    max-width: 1300px;
+    max-width: 1100px;
   }
 
   form {
@@ -202,7 +203,7 @@ article {
     color: base.$secondary-color;
     font-size: 2em;
     font-weight: 800;
-    max-width: 1300px;
+    max-width: 1100px;
   }
   span.co2,
   span.co2year {
@@ -219,7 +220,7 @@ article {
     grid-template-columns: 1fr 1fr;
     gap: 1rem;
     margin-top: 2rem;
-    max-width: 1300px;
+    max-width: 1100px;
   }
   li {
     list-style: none;
